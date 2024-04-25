@@ -1,113 +1,89 @@
-import Image from "next/image";
+"use client";
+import React, { useEffect, useState } from "react";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth, registerNewUser, userExists } from "./firebase";
+import { useRouter } from "next/navigation";
+import Login from "./componentes/Login";
+import AuthProvider from "./AuthProvider";
+import Servicio from "./componentes/Servicio";
+import Instalaciones from "./componentes/Instalaciones";
+import DatosPersona from "./componentes/DatosPersona";
+import TablaMembresias from "./componentes/TablaMembresias";
+import Header from "./componentes/Header";
+import NavBar from "./componentes/NavBar";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+export default function Page() {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [state, setCurrentState] = useState(false);
+  const router = useRouter();
+
+  async function handleOnClick() {
+    const googleProvider = new GoogleAuthProvider();
+    await singInWithGoogle(googleProvider);
+    async function singInWithGoogle(googleProvider) {
+      try {
+        const res = await signInWithPopup(auth, googleProvider);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
+  function handleUserLoggedIn(user){
+    router.push("/home");
+  }
+  function handleUserNotRegistered(user){
+    router.push("/");
+  }
+  function handleUserNotLoggedIn(){
+    router.push("/");
+
+  }
+
+    return (
+      <div
+        style={{
+          backgroundImage: "url('/bg-pesa.jpg')",
+          backgroundSize: "cover",
+        }}
+      >
+        {/* <NvBar/> fuera del Layout por no poder estableceru (!ser.exist)*/}
+        {/*          * como un parametro para desplegar el boton login o los botones*/}
+        {/*          * a los links y la foto con nombre de usuario.*/}
+        <div className="flex h-16 items-center justify-between bg-gray-900 mx-max px-2 sm:px-6 lg:px-8">{/*DIV que debería ser una etiqueta NavBar. */}
+            <div>
+              <a href="/"> 
+                <img
+                  className="overflow-hidden h-16 w-auto rounded-full" 
+                  src="https://m.media-amazon.com/images/I/51SDRru7eaL._UXNaN_FMjpg_QL85_.jpg" 
+                  alt="Your Company" 
+                />
+              </a>
+            </div>
+            <div className="p-2">
+              <button  
+                type="button"
+                onClick={() => router.push('/login')}
+                className="rounded-xl bg-sky-800 p-2 text-gray-300 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+              >
+                Login
+              </button>
+            </div>
+        </div>
+      
+          <Header />{/* presentacion del logo */}
+        <div className="p-20 opacity-70">{/* Presentacion de las instalaciones */} 
+          <Instalaciones /> 
+        </div> 
+        <div className="mx-2 flex justify-between w-auto">{/* PresentacionServicios. (versión 1.2) Se puede hacer componente para reducir código. (versión2.0=>coominsoon) Un solo componente con un map(). */}
+          <Servicio titulo="YOGA" imagen="../klipartz.com (2).png" precio="300"/>
+          <Servicio titulo="GYM" imagen="../klipartz.com (4).png" precio="380"/>
+          <Servicio titulo="PERSONALIZADO" imagen="../klipartz.com (3).png" precio="1200"/>
+        </div>
+        <div className="p-4">{/* Caracteristicas generale de cada servicio. Para rellenar visualmente y resolver preguntas frecuentes antes de que surjan. */}
+          <TablaMembresias/>
         </div>
       </div>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+    );
 }
