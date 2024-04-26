@@ -1,14 +1,18 @@
 "use client";
-import React from 'react'
-import AuthProvider from "../AuthProvider";
+import React, { useState } from 'react'
+import AuthProvider, { useAuth } from "../AuthProvider";
 import { useRouter } from "next/navigation";
 import HomeUser from '../componentes/HomeUser';
 
-export default function page() {
+export default function HomePage() {
+  const [user, setUser] = useState();
   const router = useRouter();
 
   function handleUserLoggedIn(user){
     router.push("/home");
+    setUser(user);
+
+    console.log(user);
   }
   function handleUserNotLoggedIn(){
     router.push("/login");
@@ -19,7 +23,7 @@ export default function page() {
       onUserLoggedIn={handleUserLoggedIn}
       onUserNotLoggedIn={handleUserNotLoggedIn}
     >
-      <HomeUser/>
+      <HomeUser user={user}/>
     </AuthProvider>
   )
 }

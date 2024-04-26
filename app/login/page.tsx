@@ -1,27 +1,44 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth, registerNewUser, userExists } from "../firebase";
 import { useRouter } from "next/navigation";
-import Login from "../componentes/Login";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"; // Se importa signInWithPopup para iniciar sesión con Google
+import { auth, registerNewUser, userExists } from "../firebase"; // Se importa el objeto 'auth' desde el archivo firebase
+import Login from "./Login";
 import AuthProvider from "../AuthProvider";
 
-export default function Page() {
+export default function Home() {
   const [currentUser, setCurrentUser] = useState(null);
-  const [state, setCurrentState] = useState(false);
   const router = useRouter();
 
-  async function handleOnClick() {
-    const googleProvider = new GoogleAuthProvider();
-    await singInWithGoogle(googleProvider);
-    async function singInWithGoogle(googleProvider) {
-      try {
-        const res = await signInWithPopup(auth, googleProvider);
-      } catch (error) {
-        console.error(error);
+  const handleOnClick = async () => {
+    try {
+      const googleProvider = new GoogleAuthProvider();
+      const res = await signInWithPopup(auth, googleProvider);
+      setCurrentUser(res.user);
+      console.log(currentUser);
+      // Verificar si el usuario ya existe en la base de datos
+      const exists = await userExists(res.user.uid);
+      if (!exists) {
+        // Si el usuario no existe, registrar nuevo usuario en la base de datos
+        await registerNewUser({
+          uid: res.user.uid,
+          email: res.user.email,
+          nombre: "null",
+          nacimiento: "null",
+          telefono: "null",
+          rol: 1,
+          altura: "null",
+          peso: "null",
+          sexo: "null"
+        });
       }
+
+      console.log(res.user.photoURL);
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
     }
-  }
+  };
 
   function handleUserLoggedIn(user){
     router.push("/home");
@@ -45,4 +62,5 @@ export default function Page() {
     </div>
     
   );
+  
 }

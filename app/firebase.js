@@ -19,9 +19,26 @@ export const auth = getAuth(app);
 export const db = getFirestore();
 export const storage = getStorage();
 
+export const subirJsonAFirestore = async (Array, name) => {
+  try {
+    const clientesRef = collection(db, name); // Cambia 'PALABRA' por el nombre de la colección
+    await Promise.all(Array.map(async (cliente) => {
+      await addDoc(clientesRef, cliente);
+    }));
+    console.log('Documentos subidos exitosamente a Firestore');
+  } catch (error) {
+    console.error('Error al subir documentos a Firestore:', error);
+  }
+}; //se usa con la siguiente función en un componente tsx
+/**
+useEffect(() => {
+  subirArreglosAFirestore(clientes, name); // Pasar clientes como argumento
+}, []);
+*/
+
 export async function registerNewUser(user) {
   try {
-    const usersRef = collection(db, "users");
+    const usersRef = collection(db, "usuarios");
     await setDoc(doc(usersRef, user.uid), user);
   } catch (e) {
     console.error("Error adding document: ", e);
@@ -141,31 +158,6 @@ export async function updateLink(docId, link) {
 
 
 
-
-
-
-
-
-
-
-
-// Función para subir los documentos a Firestore
-export const subirArreglosAFirestore = async (Array, name) => {
-    try {
-      const clientesRef = collection(db, name); // Cambia 'PALABRA' por el nombre de la colección
-      await Promise.all(Array.map(async (cliente) => {
-        await addDoc(clientesRef, cliente);
-      }));
-      console.log('Documentos subidos exitosamente a Firestore');
-    } catch (error) {
-      console.error('Error al subir documentos a Firestore:', error);
-    }
-  }; //se usa con la siguiente función en un componente tsx
-  /**
-  useEffect(() => {
-    subirArreglosAFirestore(clientes, name); // Pasar clientes como argumento
-  }, []);
- */
 
 // Función para obtener los IDs de todos los documentos en una colección
 export async function getAllDocumentIds(collectionName) {
