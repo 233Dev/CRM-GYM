@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, setDoc, deleteDoc,} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getStorage, ref, uploadBytes, getDownloadURL, getBytes} from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBxyrbFv7jxsSYf2j-fB82BCE6FwDfqPhw",
@@ -19,7 +19,7 @@ export const auth = getAuth(app);
 export const db = getFirestore();
 export const storage = getStorage();
 
-export const subirJsonAFirestore = async (Array, name) => {
+export const uploadToFirestore = async (Array, name) => {
   try {
     const clientesRef = collection(db, name); // Cambia 'PALABRA' por el nombre de la colección
     await Promise.all(Array.map(async (cliente) => {
@@ -52,7 +52,7 @@ export async function getDocumentInfo(collectionName, documentId) {
 }
 
 export async function getUserInfo(uid) {
-  const docRef = doc(db, "Usuarios", uid);
+  const docRef = doc(db, "usuarios", uid);
   const docSnap = await getDoc(docRef);
   return docSnap.data();
 }

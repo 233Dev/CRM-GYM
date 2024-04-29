@@ -1,15 +1,10 @@
 "use client";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth, registerNewUser, userExists } from "./firebase";
-import { useRouter } from "next/navigation";
 import Servicio from "./componentes/Servicio";
 import Instalaciones from "./componentes/Instalaciones";
 import TablaMembresias from "./componentes/TablaMembresias";
 import Header from "./componentes/Header";
-import NavBar from "./componentes/NavBar";
 
 export default function PrincipalPage() {
-  const router = useRouter();  
 
   return (
     <div
@@ -18,7 +13,6 @@ export default function PrincipalPage() {
         backgroundSize: "cover",
       }}
     >
-        <NavBar/>
         <Header />{/* presentacion del logo */}
       <div className="p-20 opacity-70">{/* Presentacion de las instalaciones */} 
         <Instalaciones /> 

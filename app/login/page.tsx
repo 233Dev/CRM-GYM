@@ -23,13 +23,13 @@ export default function Home() {
         await registerNewUser({
           uid: res.user.uid,
           email: res.user.email,
-          nombre: "null",
-          nacimiento: "null",
-          telefono: "null",
+          nombre: "nulln ",
+          nacimiento: null,
+          telefono: null,
           rol: 1,
-          altura: "null",
-          peso: "null",
-          sexo: "null"
+          altura: null,
+          peso: null,
+          sexo: false
         });
       }
 
@@ -54,10 +54,11 @@ export default function Home() {
         backgroundImage: "url('/bg-login.jpg')",
         backgroundSize: "cover",
       }}
-    ><AuthProvider
+    >
+      <AuthProvider
       onUserLoggedIn={handleUserLoggedIn}
       onUserNotLoggedIn={handleUserNotLoggedIn}>
-      <Login signInWithGoogle={handleOnClick} />
+        <Login signInWithGoogle={handleOnClick} />
       </AuthProvider>
     </div>
     

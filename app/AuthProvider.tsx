@@ -2,13 +2,11 @@
 import { useEffect, useState, createContext, useContext } from "react";
 import { onAuthStateChanged  } from "firebase/auth";
 import { auth } from "./firebase";
-import { useRouter } from "next/navigation";
 
 const AuthContext = createContext(); //Dejamos el useContext para despues, no pude.
 
 export default function AuthProvider({ children, onUserLoggedIn, onUserNotLoggedIn,/**onUserNotRegistered*/}) {
     const [user, setUser] = useState(null);
-    const router = useRouter();
 
     useEffect(()=> {
         onAuthStateChanged(auth, async (user) => {

@@ -1,41 +1,4 @@
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../firebase";
-
-/*
-  Stages:
-  0: initiated
-  1: loading
-  2: login completed
-  3: login but no username
-  4: not logged
-*/
-async function handleOnClick() {
-  const googleProvider = new GoogleAuthProvider();
-  await singInWithGoogle(googleProvider);
-  async function singInWithGoogle(googleProvider) {
-    try {
-      const res = await signInWithPopup(auth, googleProvider);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-}
-
 export default function Login({ signInWithGoogle }) {
-  
-  function handleOnClick() {
-    const googleProvider = new GoogleAuthProvider();
-    const signInWithGoogle = async () => {
-      try {
-        const res = await signInWithPopup(auth, googleProvider);
-        console.log(res);
-      } catch (err) {
-        console.error(err);
-        alert(err.message);
-      }
-    };
-    signInWithGoogle();
-  }
 
   return (
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm"> 

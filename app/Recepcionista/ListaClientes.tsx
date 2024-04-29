@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { getAllDocumentIds, getDocumentInfo, updateDocument } from './Firebase';
+import { getAllDocumentIds, getDocumentInfo, updateDocument } from '../firebase';
 
 
 // Función para obtener el color de la membresía

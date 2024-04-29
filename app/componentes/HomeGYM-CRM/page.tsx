@@ -2,9 +2,8 @@
 import React from 'react'
 import Suenho from "./Suenho"
 import Requerimientos from './Requerimientos';
-import Alimento from '../componentes/Alimento';
-import DivSizeTracker from '../DivSizeTracker';
-import Ejercicios from "../Home/Ejercicios";
+import Alimento from '../Alimento';
+import Ejercicios from "./Ejercicios";
 
 {/**HOME CLIENTE */}
 export default function page() {
@@ -18,7 +17,6 @@ export default function page() {
     **Tiempo total dormido
     **Tiempo total en sueños de 6 hrs mínimo
   *Requerimientos alimenticios por día (consultar con alguien que sepa de nutrición deportiva).*/}
-        <DivSizeTracker/>
         <Suenho /> 
         <Requerimientos uid={userId}/>
         <Alimento alimento="1"/>
@@ -28,7 +26,6 @@ export default function page() {
   *El entrenamiento para hoy.
     **Equercicios.
     **Máquinas requeridas/Máquinas disponibles.*/}
-    <DivSizeTracker/>
         <Ejercicios />
       </div>
       <div className="w-4/12 ring-1 col-span-4">{/**
@@ -38,7 +35,6 @@ export default function page() {
   *Porcentaje total en progreso.
     **Línea de tiempo
     **Alimentación (saludable/chatarra)*/}
-    <DivSizeTracker/>
         <img className='m-t rpundder' src=" ../ejercicios/mapaCuerpo.png " alt="" />
         <div>Registro alimenticio</div>
         
