@@ -2,8 +2,7 @@ import React from 'react'
 import { registerNewUserTest } from '../firebase';
 
 
-export default function Macros(props) {
-    console.log(props);
+export default function Macros({props}) {
   return (
         <>
         <p className="flex items-baseline justify-center gap-x-2">

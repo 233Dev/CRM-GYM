@@ -19,17 +19,20 @@ export default function Home() {
       // Verificar si el usuario ya existe en la base de datos
       const exists = await userExists(res.user.uid);
       if (!exists) {
+        console.log(res.user);
         // Si el usuario no existe, registrar nuevo usuario en la base de datos
         await registerNewUser({
           uid: res.user.uid,
           email: res.user.email,
-          nombre: "nulln ",
+          nombre: res.user.displayName,
           nacimiento: null,
           telefono: null,
-          rol: 1,
+          membresia: "Pagada",
+          rol: "1",
           altura: null,
           peso: null,
-          sexo: false
+          sexo: false,
+          alacena: [3, 4, 5]
         });
       }
 

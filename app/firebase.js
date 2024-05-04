@@ -19,20 +19,20 @@ export const auth = getAuth(app);
 export const db = getFirestore();
 export const storage = getStorage();
 
-export const uploadToFirestore = async (Array, name) => {
+export const uploadToFirestore = async (arreglo, name) => {
   try {
     const clientesRef = collection(db, name); // Cambia 'PALABRA' por el nombre de la colección
-    await Promise.all(Array.map(async (cliente) => {
-      await addDoc(clientesRef, cliente);
+    await Promise.all(arreglo.map(async (item) => {
+      await addDoc(clientesRef, item);
     }));
-    console.log('Documentos subidos exitosamente a Firestore');
+    console.log('Arreglo subido exitosamente a Firestore');
   } catch (error) {
     console.error('Error al subir documentos a Firestore:', error);
   }
 }; //se usa con la siguiente función en un componente tsx
 /**
 useEffect(() => {
-  subirArreglosAFirestore(clientes, name); // Pasar clientes como argumento
+  uploadToFirestore(clientes, name); // Pasar clientes como argumento
 }, []);
 */
 
@@ -169,6 +169,18 @@ export async function getAllDocumentIds(collectionName) {
     console.error('Error al obtener IDs de documentos:', error);
     return [];
   }
+}
+
+export async function getDocumentById(collectionName, ids) {
+
+    console.log("IDS: "+ids);
+    const querySnapshot = await getDocs(collection(db, collectionName));
+    // Filtrar documentos por IDs
+    const documentsByIds = querySnapshot.docs.filter(doc => ids.includes(doc.id));
+    conso.log("pito", documentsByIds);
+    // Obtener la información de los documentos filtrados
+    const documentsData = documentsByIds.map(doc => ({ id: doc.id, ...doc.data() }));
+    return documentsData;
 }
 
 // Función para actualizar los datos de un documento en una colección

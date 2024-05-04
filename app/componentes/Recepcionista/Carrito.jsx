@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
 
-export default function Test({ productosEnCarrito }) {
-  // Estado para almacenar el monto de pago
-  const [montoPago, setMontoPago] = useState('');
-  // Estado para almacenar el cambio
-  const [cambio, setCambio] = useState(0);
-
-  // Calcula el total de la compra
-  const totalCompra = productosEnCarrito.reduce((total, producto) => total + producto.precio, 0);
+export default function Carrito({ productosEnCarrito }) {
+  
+  const [montoPago, setMontoPago] = useState('');// Estado para almacenar el monto de pago
+  const [cambio, setCambio] = useState(0);// Estado para almacenar el cambio
+  
+  const totalCompra = productosEnCarrito.reduce((total, producto) => total + producto.precio, 0);// Calcula el total de la compra
 
   // Función para manejar el cambio al hacer clic en el botón "Calcular Cambio"
   const calcularCambio = () => {
-    // Convertir el monto de pago a número
-    const pago = parseFloat(montoPago);
+    
+    const pago = parseFloat(montoPago);// Convertir el monto de pago a número
     // Verificar si el monto de pago es válido
     if (!isNaN(pago)) {
-      // Calcular el cambio
-      const cambioCalculado = pago - totalCompra;
-      // Actualizar el estado del cambio
-      setCambio(cambioCalculado);
+      const cambioCalculado = pago - totalCompra;// Calcular el cambio
+      setCambio(cambioCalculado);// Actualizar el estado del cambio
     }
   };
 

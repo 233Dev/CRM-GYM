@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { getAllDocumentIds, getDocumentInfo, updateDocument } from '../firebase';
+import { getAllDocumentIds, getDocumentInfo, updateDocument } from '../../firebase';
 
 
 // Función para obtener el color de la membresía
@@ -29,18 +29,19 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      const documentIds = await getAllDocumentIds('ArrEglO');
+      const documentIds = await getAllDocumentIds('usuarios');
       const clienteData = await Promise.all(documentIds.map(async (docId) => {
-        const cliente = await getDocumentInfo('ArrEglO', docId);
+        const cliente = await getDocumentInfo('usuarios', docId);
         cliente.id = docId;
         return cliente
       }));
       setClientes(clienteData);
+      console.log(clienteData);
       
     }
     fetchData();
     console.log(clientes);
-  }, []);
+  }, [2]);
 
   const handleEdit = (cliente) => {
     setEditingCliente(cliente);
@@ -64,7 +65,7 @@ export default function Home() {
     e.preventDefault();
     const { nombre, edad, telefono, membresia } = formData;
     const newData = { nombre, edad, telefono, membresia };
-    await updateDocument('ArrEglO', editingCliente.id, newData);
+    await updateDocument('usuarios', editingCliente.id, newData);
     // Actualizar el estado de clientes después de la edición
     const updatedClientes = clientes.map(cliente => {
       if (cliente.id === editingCliente.id) {

@@ -1,8 +1,8 @@
 "use client";
-import Servicio from "./componentes/Servicio";
-import Instalaciones from "./componentes/Instalaciones";
-import TablaMembresias from "./componentes/TablaMembresias";
-import Header from "./componentes/Header";
+import Servicio from "./componentes/LandingPage/Servicio";
+import Instalaciones from "./componentes/LandingPage/Instalaciones";
+import TablaMembresias from "./componentes/LandingPage/TablaMembresias";
+import Header from "./componentes/LandingPage/Header";
 
 export default function PrincipalPage() {
 

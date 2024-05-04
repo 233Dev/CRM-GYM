@@ -6,10 +6,9 @@ import { useRouter } from 'next/navigation';
 
 const navigation = [
   { name: 'Test de componente', href: '/TestComponents', current: false },
-  { name: 'Home', href: '/Home', current: false },
-  { name: 'Recepcionista', href: '/Recepcionista', current: false },
-  { name: 'Entrenador', href: '/Entrenador', current: false },
-  { name: 'Administrador', href: '/Admin', current: false }
+  { name: 'Home', href: '/home', current: false },
+  { name: 'Comida', href: '/comida', current: false }
+
 ];
 
 export default function NavBar({user}) {

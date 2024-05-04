@@ -1,13 +1,10 @@
-"use client";
 import React from 'react'
-import ListaClientes from './ListaClientes';
-import Tienda from "./Tienda";
+import Tienda from "../componentes/Recepcionista/Tienda";
+import ListaClientes from '../componentes/Recepcionista/ListaClientes';
 
-
-export default function page() {
+export default function HomeReception({user}) {
   return (
-    <>
-      <div className='flex w-full'>
+    <div className='flex w-full'>
         <div className='w-5/12 ring-1 col-span-2'>
           <ListaClientes />
         </div>
@@ -15,6 +12,5 @@ export default function page() {
           <Tienda />
         </div>
       </div>
-    </>
   )
 }

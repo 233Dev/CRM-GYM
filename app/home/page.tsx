@@ -19,9 +19,10 @@ import React, { useEffect, useState } from 'react'
 import AuthProvider from "../AuthProvider";
 import {getUserInfo} from "../firebase"
 import { useRouter } from "next/navigation";
-import HomeUser from '../componentes/HomeUser';
-import HomeAdmin from '../componentes/HomeAdmin';
-import HomeReception from '../componentes/HomeReception'; 
+import HomeUser from './HomeUser';
+import HomeAdmin from './HomeAdmin';
+import HomeReception from './HomeReception'; 
+import HomeTrainer from './HomeTrainer'; 
 
 export default function HomePage() {
   const [uid, setUID] = useState(null);
@@ -49,7 +50,7 @@ export default function HomePage() {
       getData();
     }
   } , [uid] );
-
+console.log(userInfo);
   const rol = userInfo ? userInfo.rol : null;
 
   return (
@@ -58,10 +59,11 @@ export default function HomePage() {
       onUserNotLoggedIn={handleUserNotLoggedIn}
     > 
       <div>
-        test para el rol de usuario: {rol}
-        {rol==="1" ? <HomeUser/>:
+        {!rol ? <div>Cargado...</div>:
+         rol==="1" ? <HomeUser user={userInfo}/>:
          rol==="2" ? <HomeReception/>:
-         rol==="3" ? <HomeAdmin/>:"Tu perfil no contiene un rol válido asignádo"}
+         rol==="3" ? <HomeTrainer/>:
+         rol==="4" ? <HomeAdmin/>:"Tu perfil no contiene un rol válido asignádo"}
       </div>
     </AuthProvider>
   )

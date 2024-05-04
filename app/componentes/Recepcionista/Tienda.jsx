@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Kaka from '../TestComponents/Test'; // Asegúrate de ajustar la ruta si es necesario
+import Carrito from '../Recepcionista/Carrito'; // Asegúrate de ajustar la ruta si es necesario
 
 
 const inventario = [
@@ -38,7 +38,7 @@ export default function Tienda() {
         ))}
       </div>
       <div className='w-2/6'>
-        <Kaka productosEnCarrito={productosEnCarrito} />
+        <Carrito productosEnCarrito={productosEnCarrito} />
       </div>
     </div>    
   )
