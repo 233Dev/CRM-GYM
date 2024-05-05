@@ -9,6 +9,7 @@ import Ejercicios from '../componentes/Ejercicios';
 {/**HOME CLIENTE */}
 export default function page({user}) {
   const [alimentoInfo, setAlimentoInfo] = useState(null);
+  const [alimentoAlacena, setAlimentoAlacena] = useState(null);//Si se usa el mismo state de arriba se ciclan los useEffect
 
   useEffect(() => {  // useEffect para obtener los datos de los clientes de Firebase después de que el componente se monte
     async function fetchData() {
@@ -21,9 +22,15 @@ export default function page({user}) {
     }
     fetchData();// Llamar a la función fetchData
   }, []);// Este efecto se ejecuta solo una vez (cuando el componente se monta) debido al array de dependencias vacío []
+  
+  useEffect(()=>{
+    if (alimentoInfo && user.alacena) {
+      const alimentosEnListaDeCompra = alimentoInfo.filter(alimento => user.alacena.includes(alimento.ID));
+      setAlimentoAlacena( alimentosEnListaDeCompra);//al setear aqui con el primer useState es donde se cicla
+    }
+  },[alimentoInfo]);
 
-  console.log(alimentoInfo);// Mostrar los alimentos obtenidos en la consola
-
+  console.log(alimentoAlacena);
 
 
   return (
@@ -37,7 +44,7 @@ export default function page({user}) {
   *Requerimientos alimenticios por día (consultar con alguien que sepa de nutrición deportiva).*/}
         <Suenho /> 
         <Requerimientos userInfo={user}/>
-        <Alimento alimentoInfo={alimentoInfo} />
+        <Alimento alimentoInfo={alimentoAlacena} />
       </div>
 
       <div className="w-5/12 ring-1 col-span-6">{/**

@@ -5,7 +5,6 @@ import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from '@heroicons/react/24/s
 export default function Alimento({alimentoInfo}) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-
   //Funciones para el carrusel de alimentos
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? alimentoInfo.length - 1 : prevIndex - 1));
@@ -19,10 +18,12 @@ export default function Alimento({alimentoInfo}) {
 
   return (
     <div className="w-auto mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
-      <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
-        <button onClick={goToPrevious}><ArrowLeftCircleIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true"/></button>
-        <button onClick={goToNext}><ArrowRightCircleIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" /></button>
-
+      <div className="rounded-2xl bg-gray-50 py-4 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
+        <div>
+          <button onClick={goToPrevious}><ArrowLeftCircleIcon className="mx-auto h-8 w-8 text-gray-300" aria-hidden="true"/></button>
+          <button onClick={goToNext}><ArrowRightCircleIcon className="mx-auto h-8 w-8 text-gray-300" aria-hidden="true" /></button>
+        </div>       
+        
         <div className="mx-auto max-w-xs px-8">
           {alimentoInfo && (
             <>

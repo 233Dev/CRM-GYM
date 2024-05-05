@@ -171,18 +171,6 @@ export async function getAllDocumentIds(collectionName) {
   }
 }
 
-export async function getDocumentById(collectionName, ids) {
-
-    console.log("IDS: "+ids);
-    const querySnapshot = await getDocs(collection(db, collectionName));
-    // Filtrar documentos por IDs
-    const documentsByIds = querySnapshot.docs.filter(doc => ids.includes(doc.id));
-    conso.log("pito", documentsByIds);
-    // Obtener la información de los documentos filtrados
-    const documentsData = documentsByIds.map(doc => ({ id: doc.id, ...doc.data() }));
-    return documentsData;
-}
-
 // Función para actualizar los datos de un documento en una colección
 export async function updateDocument(collectionName, documentId, newData) {
   try {

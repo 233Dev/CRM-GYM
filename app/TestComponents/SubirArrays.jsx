@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { uploadToFirestore } from "../firebase";
 
 export default function page() {
-  /*const arreglo = [
+  const arreglo = [
     {
       "ID": 1,
       "Alimento": "Huevo",
@@ -404,11 +404,17 @@ export default function page() {
       "VitaminasMinerales": ["C", "K"],
       "Precio": "Accesible"
     }
-  ];*/
+  ];
 
-  useEffect(() => {
-    uploadToFirestore(arreglo, "alimentos");
-  }, []);
 
-  return <></>;
+  const arrayName = "alimentos";
+
+  function handleClick(){
+    uploadToFirestore(arreglo, arrayName);
+  };
+
+
+  
+
+  return <><button className="m-2" onClick={handleClick}>Subir {arrayName}</button></>;
 }

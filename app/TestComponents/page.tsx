@@ -1,7 +1,8 @@
 "use client";
 import React from 'react';
-import UpArray from "./SubirArrays";
+import SubirArrays from "./SubirArrays";
+import FiltradoArray from "./FiltradoArray";
 
 export default function page() {
-  return (<><UpArray /></>);
+  return (<><SubirArrays /></>);
 }
