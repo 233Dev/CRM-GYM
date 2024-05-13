@@ -14,7 +14,7 @@ export default function Alimento({alimentoInfo}) {
     setCurrentIndex((prevIndex) => (prevIndex === alimentoInfo.length - 1 ? 0 : prevIndex + 1));
   };
 
-  console.log(alimentoInfo);
+  //console.log(alimentoInfo);
 
   return (
     <div className="w-auto mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">

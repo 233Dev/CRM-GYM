@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, setDoc, deleteDoc,} from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, setDoc, deleteDoc, updateDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBxyrbFv7jxsSYf2j-fB82BCE6FwDfqPhw",
@@ -21,20 +21,83 @@ export const storage = getStorage();
 
 export const uploadToFirestore = async (arreglo, name) => {
   try {
-    const clientesRef = collection(db, name); // Cambia 'PALABRA' por el nombre de la colección
-    await Promise.all(arreglo.map(async (item) => {
-      await addDoc(clientesRef, item);
-    }));
+    const clientesRef = collection(db, name);
+    const promises = arreglo.map(item => addDoc(clientesRef, item));
+    await Promise.allSettled(promises);
     console.log('Arreglo subido exitosamente a Firestore');
   } catch (error) {
     console.error('Error al subir documentos a Firestore:', error);
   }
-}; //se usa con la siguiente función en un componente tsx
-/**
-useEffect(() => {
-  uploadToFirestore(clientes, name); // Pasar clientes como argumento
-}, []);
-*/
+}
+
+export async function uploadImageToStorage(file, folderName) {
+  try {
+    const storageRef = ref(storage, `${folderName}/${file.name}`);
+    await uploadBytes(storageRef, file);
+    console.log('Imagen subida exitosamente a Firebase Storage');
+    const downloadURL = await getDownloadURL(storageRef);
+    return downloadURL;
+  } catch (error) {
+    console.error('Error al subir la imagen a Firebase Storage:', error);
+    return null;
+  }
+}
+
+export async function updateImageURLInFirestore(collectionName, documentId, imageURLField, imageURL) {
+  try {
+    const docRef = doc(db, collectionName, documentId);
+    await updateDoc(docRef, { [imageURLField]: imageURL });
+    console.log('URL de imagen actualizada en Firestore');
+  } catch (error) {
+    console.error('Error al actualizar la URL de imagen en Firestore:', error);
+  }
+}
+
+export async function fetchAndFilter(coleccion, filterField, filterValues, setState) {
+  try {
+    const documentIds = await getAllDocumentIds(coleccion);
+    const data = await Promise.all(documentIds.map(async (docId) => {
+      const document = await getDocumentInfo(coleccion, docId);
+      document.id = docId; //ListaClientes depende de que la colección contenga este id para relacizar bien la edicion de los datos.
+      return document;
+    }));
+
+    let filteredData;
+    if (filterField && filterValues && filterValues.length > 0) {
+      filteredData = data.filter(item => filterValues.includes(item[filterField]));
+    } else {
+      filteredData = data; // Devuelve la colección completa si no se proporcionan criterios de filtro
+    }
+
+    setState(filteredData);
+  } catch (error) {
+    console.error(`Error al obtener y filtrar datos de la colección ${coleccion}:`, error);
+  }
+}
+
+
+export async function uploadSubColRutinaToFirestore(userId, rutinaArray) {
+  try {
+    const userRef = doc(db, "users", userId); // Referencia al documento del usuario
+    const rutinaCollectionRef = collection(userRef, "Rutina"); // Referencia a la subcolección "Rutina" dentro del usuario
+    await setDoc(doc(rutinaCollectionRef), { rutina: rutinaArray }); // Subir el arreglo a la subcolección
+    console.log('Rutina subida exitosamente a Firestore');
+  } catch (error) {
+    console.error('Error al subir la rutina a Firestore:', error);
+  }
+};
+
+export async function getSubColRutinaFromFirestore(userId) {
+  try {
+    const userRef = doc(db, "users", userId);
+    const rutinaDocRef = doc(userRef, "Rutina");
+    const rutinaDocSnap = await getDoc(rutinaDocRef);
+    return rutinaDocSnap.exists() ? rutinaDocSnap.data() : null;
+  } catch (error) {
+    console.error('Error al obtener la rutina de Firestore:', error);
+    return null;
+  }
+}
 
 export async function registerNewUser(user) {
   try {
@@ -45,22 +108,36 @@ export async function registerNewUser(user) {
   }
 }
 
+export async function getAllDocumentIds(collectionName) {
+  try {
+    const querySnapshot = await getDocs(collection(db, collectionName));
+    const documentIds = querySnapshot.docs.map(doc => doc.id);
+    return documentIds;
+  } catch (error) {
+    console.error('Error al obtener IDs de documentos:', error);
+    return [];
+  }
+}
+
 export async function getDocumentInfo(collectionName, documentId) {
   const docRef = doc(db, collectionName, documentId);
   const docSnap = await getDoc(docRef);
   return docSnap.data();
 }
 
-export async function getUserInfo(uid) {
-  const docRef = doc(db, "usuarios", uid);
-  const docSnap = await getDoc(docRef);
-  return docSnap.data();
+export async function updateDocument(collectionName, documentId, newData) {
+  try {
+    const docRef = doc(db, collectionName, documentId);
+    await updateDoc(docRef, newData);
+    console.log('Documento actualizado exitosamente en Firestore');
+  } catch (error) {
+    console.error('Error al actualizar el documento en Firestore:', error);
+  }
 }
 
 export async function userExists(uid) {
   const docRef = doc(db, "users", uid);
   const docSnap = await getDoc(docRef);
-
   return docSnap.exists();
 }
 
@@ -74,42 +151,10 @@ export async function updateUser(user) {
   }
 }
 
-export async function fetchLinkData(uid) {
-  const links = [];
-  const q = query(collection(db, "links"), where("uid", "==", uid));
-
-  const querySnapshot = await getDocs(q);
-
-  querySnapshot.forEach((doc) => {
-    const link = { ...doc.data() };
-    link.docId = doc.id;
-    console.log(link);
-    links.push(link);
-  });
-  return links;
-}
-
-export async function insertNewLink(link) {
-  try {
-    const linksRef = collection(db, "links");
-    const res = await addDoc(linksRef, link);
-    return res;
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-}
-
 export async function existsUsername(username) {
-  const users = [];
   const q = query(collection(db, "users"), where("username", "==", username));
-
   const querySnapshot = await getDocs(q);
-
-  querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
-    users.push(doc.data());
-  });
-  return users.length > 0 ? users[0].uid : null;
+  return !querySnapshot.empty ? querySnapshot.docs[0].data().uid : null;
 }
 
 export async function getUserPublicProfileInfo(uid) {
@@ -121,68 +166,10 @@ export async function getUserPublicProfileInfo(uid) {
   };
 }
 
-export async function getUserProfilePhoto(usernamePhoto) {
-  const imagesRef = ref(storage, `images/${usernamePhoto}`);
-}
-
-export async function setUserProfilePhoto(uid, file) {
-  const storage = getStorage();
-  const mountainImagesRef = ref(storage, `images/${uid}`);
-  const res = await uploadBytes(mountainImagesRef, file);
-  console.log("file uploaded", res);
-  return res;
-}
-
-export async function getProfilePhotoUrl(profilePicture) {
-  const profileRef = ref(storage, profilePicture);
-  console.log(profilePicture);
-  const url = await getDownloadURL(profileRef);
-  console.log({ url });
-  return url;
-}
-
 export async function logout() {
   await auth.signOut();
 }
 
-export async function deleteLink(docId) {
-  await deleteDoc(doc(db, "links", docId));
-}
-
-export async function updateLink(docId, link) {
-  const res = await setDoc(doc(db, "links", docId), link);
-  console.log("update link", docId, link, res);
-}
-
-
-
-
-
-
-// Función para obtener los IDs de todos los documentos en una colección
-export async function getAllDocumentIds(collectionName) {
-  try {
-    const querySnapshot = await getDocs(collection(db, collectionName));
-    const documentIds = querySnapshot.docs.map(doc => doc.id);
-    return documentIds;
-  } catch (error) {
-    console.error('Error al obtener IDs de documentos:', error);
-    return [];
-  }
-}
-
-// Función para actualizar los datos de un documento en una colección
-export async function updateDocument(collectionName, documentId, newData) {
-  try {
-    const docRef = doc(db, collectionName, documentId);
-    await updateDoc(docRef, newData);
-    console.log('Documento actualizado exitosamente en Firestore');
-  } catch (error) {
-    console.error('Error al actualizar el documento en Firestore:', error);
-  }
-}
-
-// Función para eliminar un documento de una colección
 export async function deleteDocument(collectionName, documentId) {
   try {
     const docRef = doc(db, collectionName, documentId);
@@ -192,3 +179,5 @@ export async function deleteDocument(collectionName, documentId) {
     console.error('Error al eliminar el documento de Firestore:', error);
   }
 }
+
+

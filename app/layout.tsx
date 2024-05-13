@@ -28,11 +28,12 @@ export default function RootLayout({
   function handleUserLoggedIn(user){
     setCurrentUser(user);
 
-    console.log(currentUser);
+    
   }
   function handleUserNotLoggedIn(){
   }
-
+  //console.log(currentUser);
+  
   return (
 
     <AuthProvider

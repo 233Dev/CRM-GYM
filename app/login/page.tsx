@@ -28,11 +28,18 @@ export default function Home() {
           nacimiento: null,
           telefono: null,
           membresia: "Pagada",
-          rol: "1",
-          altura: null,
-          peso: null,
-          sexo: false,
-          alacena: [3, 4, 5]
+          rol: 1,
+          altura: 0.0,
+          peso: 0.0,
+          sexo: true,
+          alacena: [3, 4, 5],
+          lunes:[1, 2, 3],
+          martes:[5, 7, 8],
+          miercoles:[null],
+          jueves:[9, 10, 11],
+          viernes:[13, 14, 16],
+          sabado:[null],
+          domingo:[null ]
         });
       }
 

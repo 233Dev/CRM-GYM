@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { getDocumentInfo, getAllDocumentIds, getDocumentById} from "../firebase";
+import { fetchAndFilter } from "../firebase";
 import Suenho from '../componentes/Suenho';
 import Requerimientos from '../componentes/Requerimientos';
 import Alimento from '../componentes/Alimento';
@@ -8,30 +8,25 @@ import Ejercicios from '../componentes/Ejercicios';
 
 {/**HOME CLIENTE */}
 export default function page({user}) {
-  const [alimentoInfo, setAlimentoInfo] = useState(null);
-  const [alimentoAlacena, setAlimentoAlacena] = useState(null);//Si se usa el mismo state de arriba se ciclan los useEffect
+  const [alimentoAlacena, setAlimentoAlacena] = useState(null);
+  const [rutina, setRutina] = useState([]);
 
-  useEffect(() => {  // useEffect para obtener los datos de los clientes de Firebase después de que el componente se monte
-    async function fetchData() {
-      const documentIds = await getAllDocumentIds('alimentos');// Obtener los IDs de todos los documentos
-      const alimentoData = await Promise.all(documentIds.map(async (docId) => {// Obtener la información de cada alimento utilizando los IDs de documento
-        const alimento = await getDocumentInfo('alimentos', docId);
-        return alimento;
-      }));
-      setAlimentoInfo(alimentoData);// Establecer el estado de alimentos con los datos obtenidos
-    }
-    fetchData();// Llamar a la función fetchData
-  }, []);// Este efecto se ejecuta solo una vez (cuando el componente se monta) debido al array de dependencias vacío []
+  const hoy = new Date();// Obtener la fecha actual para saber el día y asignar la rutina
+  const dia = hoy.getDay();
+  const ejerciciosDeHoy = dia===0 ? user.domingo :
+                          dia===1 ? user.lunes :
+                          dia===2 ? user.martes :
+                          dia===3 ? user.miercoles :
+                          dia===4 ? user.jueves :
+                          dia===5 ? user.viernes : user.sabado;
+      
+  useEffect(() => {
+    fetchAndFilter('alimentos', 'ID', user.alacena, setAlimentoAlacena);
+  }, [user.alacena]);
   
-  useEffect(()=>{
-    if (alimentoInfo && user.alacena) {
-      const alimentosEnListaDeCompra = alimentoInfo.filter(alimento => user.alacena.includes(alimento.ID));
-      setAlimentoAlacena( alimentosEnListaDeCompra);//al setear aqui con el primer useState es donde se cicla
-    }
-  },[alimentoInfo]);
-
-  console.log(alimentoAlacena);
-
+  useEffect(() => {
+    fetchAndFilter('ejercicios', 'Id', ejerciciosDeHoy, setRutina);
+  }, [ejerciciosDeHoy]);
 
   return (
     <>
@@ -51,7 +46,7 @@ export default function page({user}) {
   *El entrenamiento para hoy.
     **Equercicios.
     **Máquinas requeridas/Máquinas disponibles.*/}
-        <Ejercicios />
+        <Ejercicios ejercicios={rutina}/>
       </div>
       <div className="w-4/12 ring-1 col-span-4">{/**
   *Registro alimenticio(Sección para anotar lo que consumes en el día).

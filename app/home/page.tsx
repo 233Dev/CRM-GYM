@@ -17,7 +17,7 @@ condicional que maneje el caso en que userInfo sea null.  */}
 
 import React, { useEffect, useState } from 'react'
 import AuthProvider from "../AuthProvider";
-import {getUserInfo} from "../firebase"
+import { getDocumentInfo } from "../firebase"
 import { useRouter } from "next/navigation";
 import HomeUser from './HomeUser';
 import HomeAdmin from './HomeAdmin';
@@ -29,17 +29,14 @@ export default function HomePage() {
   const [userInfo, setUserInfo] = useState(null);
   const router = useRouter();
 
-  function handleUserLoggedIn(user){
-    setUID(user.uid);
-  }
-  function handleUserNotLoggedIn(){
-    router.push("/login");
-  }
+  const rol = userInfo ? userInfo.rol : null;
+
+
 
   useEffect( () => {
     async function getData() {
       try {
-        const userData = await getUserInfo(uid);
+        const userData = await getDocumentInfo("usuarios", uid);
         setUserInfo(userData);
       } catch (error) {
         console.error('Error al obtener los datos del usuario:', error);
@@ -50,8 +47,13 @@ export default function HomePage() {
       getData();
     }
   } , [uid] );
-console.log(userInfo);
-  const rol = userInfo ? userInfo.rol : null;
+  
+  function handleUserLoggedIn(user){
+    setUID(user.uid);
+  }
+  function handleUserNotLoggedIn(){
+    router.push("/login");
+  }
 
   return (
     <AuthProvider
@@ -60,10 +62,10 @@ console.log(userInfo);
     > 
       <div>
         {!rol ? <div>Cargado...</div>:
-         rol==="1" ? <HomeUser user={userInfo}/>:
-         rol==="2" ? <HomeReception/>:
-         rol==="3" ? <HomeTrainer/>:
-         rol==="4" ? <HomeAdmin/>:"Tu perfil no contiene un rol válido asignádo"}
+         rol===1 ? <HomeUser user={userInfo}/>:
+         rol===2 ? <HomeReception/>:
+         rol===3 ? <HomeTrainer/>:
+         rol===4 ? <HomeAdmin/>:"Tu perfil no contiene un rol válido asignádo"}
       </div>
     </AuthProvider>
   )

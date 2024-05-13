@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { getAllDocumentIds, getDocumentInfo, updateDocument } from '../../firebase';
+import { fetchAndFilter, updateDocument } from '../../firebase';
 
 
 // Función para obtener el color de la membresía
@@ -17,7 +17,7 @@ const colorMembresia = (membresia) => {
   }
 };
 
-export default function Home() {
+export default function ListaClientes({ setProductosEnCarrito, productosEnCarrito }) {
   const [editingCliente, setEditingCliente] = useState(null); // Cliente en proceso de edición
   const [clientes, setClientes] = useState([]); // Estado para almacenar los datos de Firebase
   const [formData, setFormData] = useState({
@@ -29,19 +29,14 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      const documentIds = await getAllDocumentIds('usuarios');
-      const clienteData = await Promise.all(documentIds.map(async (docId) => {
-        const cliente = await getDocumentInfo('usuarios', docId);
-        cliente.id = docId;
-        return cliente
-      }));
-      setClientes(clienteData);
-      console.log(clienteData);
-      
+      await fetchAndFilter('usuarios', null, [], setClientes);
     }
     fetchData();
-    console.log(clientes);
-  }, [2]);
+  }, []);
+
+  const agregarAlCarrito = (producto) => {
+    setProductosEnCarrito([...productosEnCarrito, producto]); // Actualiza el estado en HomeReception
+  };
 
   const handleEdit = (cliente) => {
     setEditingCliente(cliente);
@@ -98,7 +93,11 @@ export default function Home() {
         <tbody>
           {clientes.map(cliente => (
             <tr key={cliente.id} className="bg-gray-200">
-              <td className={`p-2 ${colorMembresia(cliente.membresia)}`}>{cliente.membresia}</td>
+              <td className={`p-2 ${colorMembresia(cliente.membresia)}`}>
+                {cliente.membresia == 'Vencida' || 'Proximo a vencer' ? 
+                  <button onClick={() => agregarAlCarrito([cliente.uid, cliente.membresia])}>{cliente.membresia}</button> :
+                  cliente.membresia}
+              </td>
               <td className="p-2">{cliente.nombre}</td>
               <td className="p-2">{cliente.telefono}</td>
               <td className="p-2">
@@ -133,7 +132,7 @@ export default function Home() {
                   edad:
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   id="edad"
                   name="edad"
                   value={formData.edad}
@@ -147,7 +146,7 @@ export default function Home() {
                   telefono:
                 </label>
                 <input
-                  type="number"
+                  type="tel"
                   id="telefono"
                   name="telefono"
                   value={formData.telefono}
@@ -168,7 +167,6 @@ export default function Home() {
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   required
                 >
-                  <option value="">Membresía</option>
                   <option value="Pagada">Pagada</option>
                   <option value="Vencida">Vencida</option>
                   <option value="Proximo a vencer">Por vencer</option>

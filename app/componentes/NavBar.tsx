@@ -20,11 +20,12 @@ export default function NavBar({user}) {
   }
   function handleUserLoggedIn(user){
     setCurrentUser(user);
-    console.log(currentUser);
+    
   }
   function handleUserNotLoggedIn(){
   }
-
+  //console.log(currentUser);
+  
   return (
     <AuthProvider
       onUserLoggedIn={handleUserLoggedIn}

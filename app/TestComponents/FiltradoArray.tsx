@@ -23,5 +23,3 @@ export default function FiltradoArray() {
     <div>FiltradoArray</div>
   )
 }
-
-  
