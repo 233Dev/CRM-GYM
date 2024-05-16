@@ -5,7 +5,6 @@ import TablaMembresias from "./componentes/LandingPage/TablaMembresias";
 import Header from "./componentes/LandingPage/Header";
 
 export default function PrincipalPage() {
-
   return (
     <div
       style={{
@@ -15,7 +14,7 @@ export default function PrincipalPage() {
     >
         <Header />{/* presentacion del logo */}
       <div className="p-20 opacity-70">{/* Presentacion de las instalaciones */} 
-        <Instalaciones /> 
+        <Instalaciones user={null}/> 
       </div> 
       <div className="mx-2 flex justify-between w-auto">{/* PresentacionServicios. (versión 1.2) Se puede hacer componente para reducir código. (versión2.0=>coominsoon) Un solo componente con un map(). */}
         <Servicio titulo="YOGA" imagen="../klipartz.com (2).png" precio="300"/>

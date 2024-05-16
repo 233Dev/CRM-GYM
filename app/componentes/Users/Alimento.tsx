@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from '@heroicons/react/24/solid';
 
 
-export default function Alimento({alimentoInfo}) {
+export default function Alimento({ alimentoInfo, setVerReceta}) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   //Funciones para el carrusel de alimentos
@@ -14,7 +14,12 @@ export default function Alimento({alimentoInfo}) {
     setCurrentIndex((prevIndex) => (prevIndex === alimentoInfo.length - 1 ? 0 : prevIndex + 1));
   };
 
-  //console.log(alimentoInfo);
+  const recetario = () => {
+    setVerReceta(true); // (... = operador de propagaciónsss)Actualiza el estado en HomeReception
+  };
+
+
+
 
   return (
     <div className="w-auto mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
@@ -57,12 +62,8 @@ export default function Alimento({alimentoInfo}) {
               <span className="text-xl font-bold tracking-tight text-gray-900">{alimentoInfo[currentIndex].VitaminasMinerales}</span>
               <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">g</span>
             </p>
-            <a
-              href="#"
-              className="mt-10 block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Recetas...
-            </a>
+            <button onClick={() => recetario()} className="mt-10 block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" aria-hidden="true">Recetas...</button>
+
             </>
           )}
         </div>

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import { uploadToFirestore } from "../firebase";
+import { uploadArrayToFirestore } from "../firebase";
 
 export default function page() {
   const arreglo = [
@@ -19,7 +19,7 @@ export default function page() {
   const arrayName = "inventario";
 
   function handleClick(){
-    uploadToFirestore(arreglo, arrayName);
+    uploadArrayToFirestore(arreglo, arrayName);
   };
 
 

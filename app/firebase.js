@@ -3,7 +3,7 @@ import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, s
 import { getAuth } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-const firebaseConfig = {
+const firebaseConfig = { //Pasar a un .ENV despues para proteger los datos de la DB
     apiKey: "AIzaSyBxyrbFv7jxsSYf2j-fB82BCE6FwDfqPhw",
     authDomain: "olimpusgym-73582.firebaseapp.com",
     projectId: "olimpusgym-73582",
@@ -19,7 +19,7 @@ export const auth = getAuth(app);
 export const db = getFirestore();
 export const storage = getStorage();
 
-export const uploadToFirestore = async (arreglo, name) => {
+export const uploadArrayToFirestore = async (arreglo, name) => {
   try {
     const clientesRef = collection(db, name);
     const promises = arreglo.map(item => addDoc(clientesRef, item));
@@ -30,19 +30,15 @@ export const uploadToFirestore = async (arreglo, name) => {
   }
 }
 
-export async function uploadImageToStorage(file, folderName) {
+export async function updateDocument(collectionName, documentId, newData) {
   try {
-    const storageRef = ref(storage, `${folderName}/${file.name}`);
-    await uploadBytes(storageRef, file);
-    console.log('Imagen subida exitosamente a Firebase Storage');
-    const downloadURL = await getDownloadURL(storageRef);
-    return downloadURL;
+    const docRef = doc(db, collectionName, documentId);
+    await updateDoc(docRef, newData);
+    console.log('Documento actualizado exitosamente en Firestore');
   } catch (error) {
-    console.error('Error al subir la imagen a Firebase Storage:', error);
-    return null;
+    console.error('Error al actualizar el documento en Firestore:', error);
   }
 }
-
 export async function updateImageURLInFirestore(collectionName, documentId, imageURLField, imageURL) {
   try {
     const docRef = doc(db, collectionName, documentId);
@@ -50,6 +46,19 @@ export async function updateImageURLInFirestore(collectionName, documentId, imag
     console.log('URL de imagen actualizada en Firestore');
   } catch (error) {
     console.error('Error al actualizar la URL de imagen en Firestore:', error);
+  }
+}
+
+export async function uploadImageToStorage(file, folderName, imageName) {
+  try {
+    const storageRef = ref(storage, `${folderName}/${imageName}`);
+    await uploadBytes(storageRef, file);
+    console.log('Imagen subida exitosamente a Firebase Storage');
+    const downloadURL = await getDownloadURL(storageRef);
+    return downloadURL;
+  } catch (error) {
+    console.error('Error al subir la imagen a Firebase Storage:', error);
+    return null;
   }
 }
 
@@ -125,30 +134,10 @@ export async function getDocumentInfo(collectionName, documentId) {
   return docSnap.data();
 }
 
-export async function updateDocument(collectionName, documentId, newData) {
-  try {
-    const docRef = doc(db, collectionName, documentId);
-    await updateDoc(docRef, newData);
-    console.log('Documento actualizado exitosamente en Firestore');
-  } catch (error) {
-    console.error('Error al actualizar el documento en Firestore:', error);
-  }
-}
-
 export async function userExists(uid) {
   const docRef = doc(db, "users", uid);
   const docSnap = await getDoc(docRef);
   return docSnap.exists();
-}
-
-export async function updateUser(user) {
-  console.log(user);
-  try {
-    const usersRef = collection(db, "users");
-    await setDoc(doc(usersRef, user.uid), user);
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
 }
 
 export async function existsUsername(username) {

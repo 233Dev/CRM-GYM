@@ -12,7 +12,7 @@ export default function FiltradoArray() {
   const usuario = {
     id: 1,
     nombre: 'Juan',
-    listaDeCompra: [1, 3, 5] // IDs de los alimentos que necesita comprar
+    listaDeCompra: [1, 3, 5] // IDs de los alimentos que se necesitan comprar
   };
 
   console.log(usuario.listaDeCompra);

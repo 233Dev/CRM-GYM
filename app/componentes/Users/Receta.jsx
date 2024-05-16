@@ -1,5 +1,8 @@
 "use client";
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import fetchAndFilter from "../../firebase"
+
+
 
 const receta = {
     nombre: "Ensalada de Pollo y Aguacate",
@@ -49,6 +52,12 @@ const receta = {
   };  
 
 export default function Receta() {
+  const [recetas, setRecetas] = useState(null);
+  
+  useEffect(() => {
+    fetchAndFilter('alimentos', 'ID', user.alacena, setRecetas);
+  }, [user.alacena]);
+  
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
       {/* Imagen de la receta */}

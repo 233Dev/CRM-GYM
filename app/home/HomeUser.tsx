@@ -1,15 +1,25 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { fetchAndFilter } from "../firebase";
-import Suenho from '../componentes/Suenho';
-import Requerimientos from '../componentes/Requerimientos';
-import Alimento from '../componentes/Alimento';
-import Ejercicios from '../componentes/Ejercicios';
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
+import Suenho from '../componentes/Users/Suenho';
+import Requerimientos from '../componentes/Users/Requerimientos';
+import Alimento from '../componentes/Users/Alimento';
+import Ejercicios from '../componentes/Users/Ejercicios';
+import Recetas from '../componentes/Users/Recetas';
 
 {/**HOME CLIENTE */}
 export default function page({user}) {
   const [alimentoAlacena, setAlimentoAlacena] = useState(null);
   const [rutina, setRutina] = useState([]);
+  const [recetas, setRecetas] = useState(null);
+  const [verReceta, setVerReceta] = useState(false);
+  const [recetasAlacena, setRecetasAlacena] = useState(null);
+  console.log("esta es la receta: "+verReceta);
+    
+    useEffect(() => {
+      fetchAndFilter('alimentos', 'ID', user.alacena, setRecetas);
+    }, [user.alacena]);
 
   const hoy = new Date();// Obtener la fecha actual para saber el día y asignar la rutina
   const dia = hoy.getDay();
@@ -39,15 +49,26 @@ export default function page({user}) {
   *Requerimientos alimenticios por día (consultar con alguien que sepa de nutrición deportiva).*/}
         <Suenho /> 
         <Requerimientos userInfo={user}/>
-        <Alimento alimentoInfo={alimentoAlacena} />
+        <Alimento setVerReceta={setVerReceta} verReceta={verReceta}  alimentoInfo={alimentoAlacena} />
       </div>
+
+     
+
+
+
+
 
       <div className="w-5/12 ring-1 col-span-6">{/**
   *El entrenamiento para hoy.
     **Equercicios.
     **Máquinas requeridas/Máquinas disponibles.*/}
-        <Ejercicios ejercicios={rutina}/>
+        {!verReceta ? <Ejercicios ejercicios={rutina}/> :  <Recetas setVerReceta={setVerReceta} verReceta={verReceta}/>}
       </div>
+
+
+
+
+
       <div className="w-4/12 ring-1 col-span-4">{/**
   *Registro alimenticio(Sección para anotar lo que consumes en el día).
     *Contador de nutrientes.

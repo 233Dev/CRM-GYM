@@ -12,7 +12,7 @@ export default function Tienda({ setProductosEnCarrito, productosEnCarrito }) {
   }, []);
 
   const agregarAlCarrito = (producto) => {
-    setProductosEnCarrito([...productosEnCarrito, producto]); // Actualiza el estado en HomeReception
+    setProductosEnCarrito([...productosEnCarrito, producto]); // (... = operador de propagaciónsss)Actualiza el estado en HomeReception
   };
 
   return (

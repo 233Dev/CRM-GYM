@@ -1,5 +1,5 @@
 
-export default function HomeTrainer() {
+export default function HomeTrainer({user}) {
   return (
     <div className='flex h-96 max-h-screen'>
       <div className='w-3/4'>

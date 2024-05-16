@@ -1,4 +1,3 @@
-"use client";
 import React, { useState, useEffect } from 'react';
 import { fetchAndFilter, updateDocument } from '../../firebase';
 
@@ -35,7 +34,7 @@ export default function ListaClientes({ setProductosEnCarrito, productosEnCarrit
   }, []);
 
   const agregarAlCarrito = (producto) => {
-    setProductosEnCarrito([...productosEnCarrito, producto]); // Actualiza el estado en HomeReception
+    setProductosEnCarrito([...productosEnCarrito, producto]);
   };
 
   const handleEdit = (cliente) => {

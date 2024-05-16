@@ -25,7 +25,7 @@ export default function Home() {
           uid: res.user.uid,
           email: res.user.email,
           nombre: res.user.displayName,
-          nacimiento: null,
+          nacimiento: "2006-06-06 01:46:00.123",
           telefono: null,
           membresia: "Pagada",
           rol: 1,

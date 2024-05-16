@@ -1,5 +1,5 @@
 import React from 'react'
-import { registerNewUserTest } from '../firebase';
+import { registerNewUserTest } from '../../firebase';
 
 
 export default function Macros({props}) {

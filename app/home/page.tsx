@@ -63,9 +63,9 @@ export default function HomePage() {
       <div>
         {!rol ? <div>Cargado...</div>:
          rol===1 ? <HomeUser user={userInfo}/>:
-         rol===2 ? <HomeReception/>:
-         rol===3 ? <HomeTrainer/>:
-         rol===4 ? <HomeAdmin/>:"Tu perfil no contiene un rol válido asignádo"}
+         rol===2 ? <HomeReception user={userInfo}/>:
+         rol===3 ? <HomeTrainer user={userInfo}/>:
+         rol===4 ? <HomeAdmin user={userInfo}/>:"Tu perfil no contiene un rol válido asignádo"}
       </div>
     </AuthProvider>
   )
