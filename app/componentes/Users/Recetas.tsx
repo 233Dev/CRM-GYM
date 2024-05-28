@@ -2,7 +2,7 @@ import React from 'react'
 import Receta from "./Receta";
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-export default function Recetas({ setVerReceta }) {
+export default function Recetas({ setVerReceta, recetas }) {
   const recetario = () => {
     setVerReceta(false);
   };
@@ -16,3 +16,15 @@ export default function Recetas({ setVerReceta }) {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+

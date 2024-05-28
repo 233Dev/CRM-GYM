@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from '@heroicons/react/24/solid';
 
 
-export default function Alimento({ alimentoInfo, setVerReceta}) {
+export default function Alimento({ alimentoInfo, setVerReceta, closeAlacena, setCloseAlacena}) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   //Funciones para el carrusel de alimentos
-  const goToPrevious = () => {
+  const goToPre = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? alimentoInfo.length - 1 : prevIndex - 1));
   };
 
@@ -14,18 +14,24 @@ export default function Alimento({ alimentoInfo, setVerReceta}) {
     setCurrentIndex((prevIndex) => (prevIndex === alimentoInfo.length - 1 ? 0 : prevIndex + 1));
   };
 
-  const recetario = () => {
-    setVerReceta(true); // (... = operador de propagaciónsss)Actualiza el estado en HomeReception
+  const OpenAlacena = () => {
+    setCloseAlacena(true);
   };
+
+  const recetario = () => {
+    setVerReceta(true);
+  };
+  //console.log(alimentoInfo);
 
 
 
 
   return (
-    <div className="w-auto mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
-      <div className="rounded-2xl bg-gray-50 py-4 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
+    <div className="item-center w-auto mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
+      <div className=" rounded-2xl bg-gray-50 py-4 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
         <div>
-          <button onClick={goToPrevious}><ArrowLeftCircleIcon className="mx-auto h-8 w-8 text-gray-300" aria-hidden="true"/></button>
+          <button onClick={goToPre}><ArrowLeftCircleIcon className="mx-auto h-8 w-8 text-gray-300" aria-hidden="true"/></button>
+          <button onClick={OpenAlacena} className="items-center mx-auto text-sm h-8 text-gray-300">ALACENA</button>
           <button onClick={goToNext}><ArrowRightCircleIcon className="mx-auto h-8 w-8 text-gray-300" aria-hidden="true" /></button>
         </div>       
         

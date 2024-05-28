@@ -8,7 +8,6 @@ const navigation = [
   { name: 'Test de componente', href: '/TestComponents', current: false },
   { name: 'Home', href: '/home', current: false },
   { name: 'Comida', href: '/comida', current: false }
-
 ];
 
 export default function NavBar({user}) {
@@ -31,11 +30,11 @@ export default function NavBar({user}) {
       onUserLoggedIn={handleUserLoggedIn}
       onUserNotLoggedIn={handleUserNotLoggedIn}
     >
-        <div className="flex h-16 items-center justify-between bg-gray-900 mx-max px-2 sm:px-6 lg:px-8">
+        <div className="flex h-12 items-center justify-between bg-gray-900 mx-max px-2 sm:px-6 lg:px-8">
           <div>{/**Logo ppegado a la izquierda. */}
             <a href="/">
               <img
-                className="relative overflow-hidden h-16 w-auto rounded-full"
+                className="relative overflow-hidden h-12 w-auto rounded-full"
                 src="https://m.media-amazon.com/images/I/51SDRru7eaL._UXNaN_FMjpg_QL85_.jpg"
                 alt="Your Company"
               />

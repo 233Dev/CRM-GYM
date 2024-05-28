@@ -39,6 +39,7 @@ export async function updateDocument(collectionName, documentId, newData) {
     console.error('Error al actualizar el documento en Firestore:', error);
   }
 }
+
 export async function updateImageURLInFirestore(collectionName, documentId, imageURLField, imageURL) {
   try {
     const docRef = doc(db, collectionName, documentId);
@@ -84,29 +85,99 @@ export async function fetchAndFilter(coleccion, filterField, filterValues, setSt
   }
 }
 
-
-export async function uploadSubColRutinaToFirestore(userId, rutinaArray) {
+// Función para crear o actualizar un documento en una subcolección, similar a fetchANdFilter, pero sin ".filter()"
+export async function manageSubcollectionDocument(
+  collectionName, 
+  documentId, 
+  subcollectionName = null, 
+  subcollectionDocumentId = null, 
+  data = null,
+  callId = null // Añade este parámetro
+) {
   try {
-    const userRef = doc(db, "users", userId); // Referencia al documento del usuario
-    const rutinaCollectionRef = collection(userRef, "Rutina"); // Referencia a la subcolección "Rutina" dentro del usuario
-    await setDoc(doc(rutinaCollectionRef), { rutina: rutinaArray }); // Subir el arreglo a la subcolección
-    console.log('Rutina subida exitosamente a Firestore');
-  } catch (error) {
-    console.error('Error al subir la rutina a Firestore:', error);
-  }
-};
+    console.log(`Call ID: ${callId}, Collection: ${collectionName}, Document: ${documentId}, Subcollection: ${subcollectionName}, SubcollectionDocumentId: ${subcollectionDocumentId}`);
+    let docRef;
 
-export async function getSubColRutinaFromFirestore(userId) {
-  try {
-    const userRef = doc(db, "users", userId);
-    const rutinaDocRef = doc(userRef, "Rutina");
-    const rutinaDocSnap = await getDoc(rutinaDocRef);
-    return rutinaDocSnap.exists() ? rutinaDocSnap.data() : null;
+    if (subcollectionName) {
+      if (subcollectionDocumentId) {
+        docRef = doc(db, collectionName, documentId, subcollectionName, subcollectionDocumentId);
+      } else {
+        // Si no se proporciona un ID de documento, crear un nuevo documento con ID generado automáticamente en la subcolección
+        const subcollectionRef = collection(db, collectionName, documentId, subcollectionName);
+        const newDocRef = await addDoc(subcollectionRef, data || {});
+        console.log(`Call ID: ${callId}, Documento creado exitosamente con ID: ${newDocRef.id}`);
+        return (await getDoc(newDocRef)).data();
+      }
+    } else {
+      docRef = doc(db, collectionName, documentId);
+    }
+
+    if (data) {
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        await updateDoc(docRef, data);
+        console.log(`Call ID: ${callId}, Documento actualizado exitosamente`);
+      } else {
+        await setDoc(docRef, data);
+        console.log(`Call ID: ${callId}, Documento creado exitosamente`);
+      }
+
+      const updatedDocSnap = await getDoc(docRef);
+      return updatedDocSnap.data();
+    } else {
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        return docSnap.data();
+      } else {
+        console.error(`Call ID: ${callId}, El documento no existe`);
+        return null;
+      }
+    }
   } catch (error) {
-    console.error('Error al obtener la rutina de Firestore:', error);
+    console.error(`Call ID: ${callId}, Error al crear o actualizar el documento:`, error);
     return null;
   }
 }
+
+
+// Función para obtener todos los documentos de una subcolección si documentId está vacío (talvez ya no sea necesario)
+export async function fetchSubcollectionDocuments(
+  collectionName, 
+  documentId, 
+  subcollectionName, 
+  filterField = null, 
+  filterValues = null, 
+  setState = null
+) {
+  try {
+    const subcollectionRef = documentId
+      ? collection(db, collectionName, documentId, subcollectionName)
+      : collection(db, collectionName, subcollectionName);
+
+    const querySnapshot = await getDocs(subcollectionRef);
+    const documents = querySnapshot.docs.map(docSnap => ({
+      ...docSnap.data(),
+      id: docSnap.id
+    }));
+
+    let filteredData;
+    if (filterField && filterValues && filterValues.length > 0) {
+      filteredData = documents.filter(item => filterValues.includes(item[filterField]));
+    } else {
+      filteredData = documents;
+    }
+
+    if (setState) {
+      setState(filteredData);
+    }
+
+    return filteredData;
+  } catch (error) {
+    console.error(`Error al obtener documentos de la subcolección ${subcollectionName}:`, error);
+    return [];
+  }
+}
+
 
 export async function registerNewUser(user) {
   try {
@@ -168,5 +239,3 @@ export async function deleteDocument(collectionName, documentId) {
     console.error('Error al eliminar el documento de Firestore:', error);
   }
 }
-
-

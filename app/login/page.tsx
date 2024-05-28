@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"; // Se importa signInWithPopup para iniciar sesión con Google
 import { auth, registerNewUser, userExists } from "../firebase"; // Se importa el objeto 'auth' desde el archivo firebase
+import { Timestamp } from "firebase/firestore"; // Importar Timestamp de Firebase
 import Login from "./Login";
 import AuthProvider from "../AuthProvider";
 
 export default function Home() {
+  const [isRegistered, setIsRegistered] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const router = useRouter();
 
@@ -16,7 +18,6 @@ export default function Home() {
       const res = await signInWithPopup(auth, googleProvider);
       setCurrentUser(res.user);
       console.log(currentUser);
-      // Verificar si el usuario ya existe en la base de datos
       const exists = await userExists(res.user.uid);
       if (!exists) {
         console.log(res.user);
@@ -25,21 +26,20 @@ export default function Home() {
           uid: res.user.uid,
           email: res.user.email,
           nombre: res.user.displayName,
-          nacimiento: "2006-06-06 01:46:00.123",
+          nacimieno:null,
           telefono: null,
-          membresia: "Pagada",
-          rol: 1,
-          altura: 0.0,
-          peso: 0.0,
-          sexo: true,
-          alacena: [3, 4, 5],
-          lunes:[1, 2, 3],
-          martes:[5, 7, 8],
-          miercoles:[null],
-          jueves:[9, 10, 11],
-          viernes:[13, 14, 16],
-          sabado:[null],
-          domingo:[null ]
+          membresia: "registro",
+          rol: 5,
+          altura: null,
+          peso: null,
+          sexo: null,
+          lunes: null,
+          martes: null,
+          miercoles: null,
+          jueves: null,
+          viernes: null,
+          sabado: null,
+          domingo: null
         });
       }
 
@@ -51,7 +51,12 @@ export default function Home() {
   };
 
   function handleUserLoggedIn(user){
+
+    if(user.rol==null){
+      router.push("/home");
+    }
     router.push("/home");
+    
   }
   function handleUserNotLoggedIn(){
     router.push("/login");

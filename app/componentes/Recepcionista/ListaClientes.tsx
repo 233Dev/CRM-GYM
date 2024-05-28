@@ -80,7 +80,7 @@ export default function ListaClientes({ setProductosEnCarrito, productosEnCarrit
 
   return (
     <div className="ring-1 border border-gray-300 rounded-2xl overflow-hidden">
-      <table className="w-full">
+      <table className="w-full bg-gray-200 bg-opacity-40 ">
         <thead>
           <tr className="border-b border-gray-300">
             <th className="p-2">Membresía</th>
@@ -91,7 +91,7 @@ export default function ListaClientes({ setProductosEnCarrito, productosEnCarrit
         </thead>
         <tbody>
           {clientes.map(cliente => (
-            <tr key={cliente.id} className="bg-gray-200">
+            <tr key={cliente.id} >
               <td className={`p-2 ${colorMembresia(cliente.membresia)}`}>
                 {cliente.membresia == 'Vencida' || 'Proximo a vencer' ? 
                   <button onClick={() => agregarAlCarrito([cliente.uid, cliente.membresia])}>{cliente.membresia}</button> :
@@ -113,7 +113,7 @@ export default function ListaClientes({ setProductosEnCarrito, productosEnCarrit
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <p>
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nombre">
+                <label className="block text-gray-900 text-sm font-bold mb-2" htmlFor="nombre">
                   Nombre:
                 </label>
                 <input
@@ -122,12 +122,12 @@ export default function ListaClientes({ setProductosEnCarrito, productosEnCarrit
                   name="nombre"
                   value={formData.nombre}
                   onChange={handleChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
                   required
                 />
               </p>
               <p>
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="edad">
+                <label className="block text-gray-900 text-sm font-bold mb-2" htmlFor="edad">
                   edad:
                 </label>
                 <input
@@ -136,12 +136,12 @@ export default function ListaClientes({ setProductosEnCarrito, productosEnCarrit
                   name="edad"
                   value={formData.edad}
                   onChange={handleChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
                   required
                 />
               </p>
               <p>
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="telefono">
+                <label className="block text-gray-900 text-sm font-bold mb-2" htmlFor="telefono">
                   telefono:
                 </label>
                 <input
@@ -150,12 +150,12 @@ export default function ListaClientes({ setProductosEnCarrito, productosEnCarrit
                   name="telefono"
                   value={formData.telefono}
                   onChange={handleChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
                   required
                 />
               </p>
               <p>
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="membresia">
+                <label className="block text-gray-900 text-sm font-bold mb-2" htmlFor="membresia">
                   membresia:
                 </label>
                 <select
@@ -163,7 +163,7 @@ export default function ListaClientes({ setProductosEnCarrito, productosEnCarrit
                   name="membresia"
                   value={formData.membresia}
                   onChange={handleChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
                   required
                 >
                   <option value="Pagada">Pagada</option>
@@ -183,3 +183,71 @@ export default function ListaClientes({ setProductosEnCarrito, productosEnCarrit
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/*import React, { useState } from 'react';
+import { uploadArrayToFirestore, uploadImageToStorage } from '../../firebase';
+
+export default function SubirServicio({ setActualizarServicios, actualizarServicios }) {
+  const [nombre, setNombre] = useState('');
+  const [id, setId] = useState('');
+  const [costo, setCosto] = useState('');
+  const [imagenFile, setImagenFile] = useState(null);
+
+  const handleUpload = async () => {
+    try {
+      let imageURL = '';
+      if (imagenFile) {
+        imageURL = await uploadImageToStorage(imagenFile, 'servicios', `${id}_imagen`);
+        console.log('URL de imagen subida:', imageURL);
+      }
+      const servicio = { nombre, id, costo, imagen: imageURL };
+      await uploadArrayToFirestore([servicio], 'servicios');
+      setActualizarServicios(!actualizarServicios);
+      console.log(actualizarServicios);
+    } catch (error) {
+      console.error('Error al subir datos:', error);
+    }
+  };
+
+  return (
+      <div>
+        <input
+          type="text"
+          placeholder="Nombre"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="ID"
+          value={id}
+          onChange={(e) => setId(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Costo"
+          value={costo}
+          onChange={(e) => setCosto(e.target.value)}
+        />
+        <input type="file" onChange={(e) => setImagenFile(e.target.files[0])} />
+        <button onClick={handleUpload}>Subir Servicio</button>
+      </div>
+  );
+}
+*/}

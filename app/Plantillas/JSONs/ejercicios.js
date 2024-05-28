@@ -2,7 +2,6 @@
     {
       "Nombre": "Sentadillas",
       "Objetivo": "Desarrollo de piernas y glúteos"
-      "AquíPonleOtro": "Desarrollo de piernas y glúteos"
     },
     {
       "Nombre": "Prensa de piernas",

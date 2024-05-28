@@ -1,403 +1,303 @@
 [
-    {
-      "ID": 1,
-      "Alimento": "Huevo",
-      "Peso": 50,
-      "Proteína": 6,
-      "Calorías": 78,
-      "Carbohidratos": 0.6,
-      "VitaminasMinerales": ["D", "B12"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 2,
-      "Alimento": "Pollo (pechuga)",
-      "Peso": 100,
-      "Proteína": 31,
-      "Calorías": 165,
-      "Carbohidratos": 0,
-      "VitaminasMinerales": ["Hierro", "Zinc"],
-      "Precio": "Aceptable"
-    },
-    {
-      "ID": 3,
-      "Alimento": "Arroz integral",
-      "Peso": 50,
-      "Proteína": 2,
-      "Calorías": 181,
-      "Carbohidratos": 39,
-      "VitaminasMinerales": ["Magnesio", "Selenio"],
-      "Precio": "Bajo"
-    },
-    {
-      "ID": 4,
-      "Alimento": "Avena",
-      "Peso": 40,
-      "Proteína": 5,
-      "Calorías": 151,
-      "Carbohidratos": 27,
-      "VitaminasMinerales": ["Hierro", "Magnesio"],
-      "Precio": "Bajo"
-    },
-    {
-      "ID": 5,
-      "Alimento": "Atún enlatado",
-      "Peso": 50,
-      "Proteína": 13,
-      "Calorías": 57,
-      "Carbohidratos": 0,
-      "VitaminasMinerales": ["Omega-3"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 6,
-      "Alimento": "Frijoles",
-      "Peso": 100,
-      "Proteína": 9,
-      "Calorías": 333,
-      "Carbohidratos": 60,
-      "VitaminasMinerales": ["Fibra", "Potasio"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 7,
-      "Alimento": "Espinacas",
-      "Peso": 50,
-      "Proteína": 2,
-      "Calorías": 7,
-      "Carbohidratos": 1,
-      "VitaminasMinerales": ["K", "A"],
-      "Precio": "Bajo"
-    },
-    {
-      "ID": 8,
-      "Alimento": "Manzana",
-      "Peso": 150,
-      "Proteína": 0,
-      "Calorías": 77,
-      "Carbohidratos": 20,
-      "VitaminasMinerales": ["C", "Fibra"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 9,
-      "Alimento": "Plátano",
-      "Peso": 100,
-      "Proteína": 1,
-      "Calorías": 89,
-      "Carbohidratos": 23,
-      "VitaminasMinerales": ["Potasio", "B6"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 10,
-      "Alimento": "Zanahoria",
-      "Peso": 80,
-      "Proteína": 1,
-      "Calorías": 35,
-      "Carbohidratos": 8,
-      "VitaminasMinerales": ["A", "K"],
-      "Precio": "Bajo"
-    },
-    {
-      "ID": 11,
-      "Alimento": "Yogur griego",
-      "Peso": 150,
-      "Proteína": 15,
-      "Calorías": 100,
-      "Carbohidratos": 6,
-      "VitaminasMinerales": ["Calcio", "Probióticos"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 12,
-      "Alimento": "Salmón",
-      "Peso": 100,
-      "Proteína": 20,
-      "Calorías": 208,
-      "Carbohidratos": 0,
-      "VitaminasMinerales": ["Omega-3", "D"],
-      "Precio": "Aceptable"
-    },
-    {
-      "ID": 13,
-      "Alimento": "Quinoa",
-      "Peso": 50,
-      "Proteína": 4,
-      "Calorías": 222,
-      "Carbohidratos": 39,
-      "VitaminasMinerales": ["Hierro", "Magnesio"],
-      "Precio": "Aceptable"
-    },
-    {
-      "ID": 14,
-      "Alimento": "Pavo (pechuga)",
-      "Peso": 100,
-      "Proteína": 29,
-      "Calorías": 135,
-      "Carbohidratos": 0,
-      "VitaminasMinerales": ["Hierro", "Zinc"],
-      "Precio": "Aceptable"
-    },
-    {
-      "ID": 15,
-      "Alimento": "Camote",
-      "Peso": 100,
-      "Proteína": 1,
-      "Calorías": 86,
-      "Carbohidratos": 20,
-      "VitaminasMinerales": ["A", "C"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 16,
-      "Alimento": "Brócoli",
-      "Peso": 100,
-      "Proteína": 2.5,
-      "Calorías": 34,
-      "Carbohidratos": 7,
-      "VitaminasMinerales": ["C", "K"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 17,
-      "Alimento": "Pan integral",
-      "Peso": 50,
-      "Proteína": 6,
-      "Calorías": 135,
-      "Carbohidratos": 25,
-      "VitaminasMinerales": ["Hierro", "B"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 18,
-      "Alimento": "Carne molida magra",
-      "Peso": 100,
-      "Proteína": 25,
-      "Calorías": 250,
-      "Carbohidratos": 0,
-      "VitaminasMinerales": ["Hierro", "B12"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 19,
-      "Alimento": "Garbanzos",
-      "Peso": 100,
-      "Proteína": 9,
-      "Calorías": 164,
-      "Carbohidratos": 27,
-      "VitaminasMinerales": ["Hierro", "Magnesio"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 20,
-      "Alimento": "Tomate",
-      "Peso": 80,
-      "Proteína": 1,
-      "Calorías": 15,
-      "Carbohidratos": 3,
-      "VitaminasMinerales": ["C", "Licopeno"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 21,
-      "Alimento": "Leche descremada",
-      "Peso": 200,
-      "Proteína": 12,
-      "Calorías": 80,
-      "Carbohidratos": 12,
-      "VitaminasMinerales": ["Calcio", "D"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 22,
-      "Alimento": "Pechuga de pavo (jamón)",
-      "Peso": 50,
-      "Proteína": 12,
-      "Calorías": 60,
-      "Carbohidratos": 0,
-      "VitaminasMinerales": ["B12", "Zinc"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 23,
-      "Alimento": "Lentejas",
-      "Peso": 100,
-      "Proteína": 9,
-      "Calorías": 116,
-      "Carbohidratos": 20,
-      "VitaminasMinerales": ["Hierro", "Potasio"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 24,
-      "Alimento": "Almendras",
-      "Peso": 30,
-      "Proteína": 6,
-      "Calorías": 164,
-      "Carbohidratos": 6,
-      "VitaminasMinerales": ["E", "Magnesio"],
-      "Precio": "Aceptable"
-    },
-    {
-      "ID": 25,
-      "Alimento": "Kiwi",
-      "Peso": 100,
-      "Proteína": 1,
-      "Calorías": 61,
-      "Carbohidratos": 15,
-      "VitaminasMinerales": ["C", "K"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 26,
-      "Alimento": "Pera",
-      "Peso": 150,
-      "Proteína": 0,
-      "Calorías": 85,
-      "Carbohidratos": 22,
-      "VitaminasMinerales": ["C", "Fibra"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 27,
-      "Alimento": "Naranja",
-      "Peso": 150,
-      "Proteína": 2,
-      "Calorías": 62,
-      "Carbohidratos": 15,
-      "VitaminasMinerales": ["C", "Fibra"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 28,
-      "Alimento": "Tofu",
-      "Peso": 100,
-      "Proteína": 8,
-      "Calorías": 76,
-      "Carbohidratos": 2,
-      "VitaminasMinerales": ["Calcio", "Hierro"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 29,
-      "Alimento": "VACIO",
-      "Peso": null,
-      "Proteína": null,
-      "Calorías": null,
-      "Carbohidratos": null,
-      "VitaminasMinerales": [" ", " "],
-      "Precio": null
-    },
-    {
-      "ID": 30,
-      "Alimento": "Queso cottage",
-      "Peso": 100,
-      "Proteína": 11,
-      "Calorías": 98,
-      "Carbohidratos": 2,
-      "VitaminasMinerales": ["Calcio", "B12"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 31,
-      "Alimento": "Pescado blanco",
-      "Peso": 100,
-      "Proteína": 18,
-      "Calorías": 90,
-      "Carbohidratos": 0,
-      "VitaminasMinerales": ["Omega-3", "D"],
-      "Precio": "Aceptable"
-    },
-    {
-      "ID": 32,
-      "Alimento": "VACIO",
-      "Peso": null,
-      "Proteína": null,
-      "Calorías": null,
-      "Carbohidratos": null,
-      "VitaminasMinerales": ["C", "K"],
-      "Precio": "null"
-    },
-    {
-      "ID": 33,
-      "Alimento": "Papas",
-      "Peso": 150,
-      "Proteína": 3,
-      "Calorías": 134,
-      "Carbohidratos": 31,
-      "VitaminasMinerales": ["C", "Potasio"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 34,
-      "Alimento": "VACIO",
-      "Peso": null,
-      "Proteína": null,
-      "Calorías": null,
-      "Carbohidratos": null,
-      "VitaminasMinerales": [" ", " "],
-      "Precio": null
-    },
-    {
-      "ID": 35,
-      "Alimento": "Queso ricotta",
-      "Peso": 100,
-      "Proteína": 11,
-      "Calorías": 174,
-      "Carbohidratos": 3,
-      "VitaminasMinerales": ["Calcio", "B12"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 36,
-      "Alimento": "Chocolate oscuro (70%)",
-      "Peso": 30,
-      "Proteína": 2,
-      "Calorías": 145,
-      "Carbohidratos": 12,
-      "VitaminasMinerales": ["Hierro", "Magnesio"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 37,
-      "Alimento": "Huevos de codorniz",
-      "Peso": 30,
-      "Proteína": 3,
-      "Calorías": 54,
-      "Carbohidratos": 0,
-      "VitaminasMinerales": ["B12"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 38,
-      "Alimento": "VACIO",
-      "Peso": null,
-      "Proteína": null,
-      "Calorías": null,
-      "Carbohidratos": null,
-      "VitaminasMinerales": ["Hierro", "Magnesio"],
-      "Precio": null
-    },
-    {
-      "ID": 39,
-      "Alimento": "Guisantes",
-      "Peso": 100,
-      "Proteína": 5,
-      "Calorías": 81,
-      "Carbohidratos": 14,
-      "VitaminasMinerales": ["C", "K"],
-      "Precio": "Accesible"
-    },
-    {
-      "ID": 40,
-      "Alimento": "Uvas",
-      "Peso": 100,
-      "Proteína": 1,
-      "Calorías": 67,
-      "Carbohidratos": 17,
-      "VitaminasMinerales": ["C", "K"],
-      "Precio": "Accesible"
-    }
-  ]
-   
+      {
+        "ID": 1,
+        "Alimento": "Salmón",
+        "Peso": "0.2",
+        "Proteína": "20g",
+        "Calorías": "206 kcal",
+        "Carbohidratos": "0g",
+        "VitaminasMinerales": [1, 6, 11, 12, 14, 15, 16, 20, 21, 30],
+        "Costo": "Alto"
+      },
+      {
+        "ID": 2,
+        "Alimento": "Espinaca",
+        "Peso": "0.2",
+        "Proteína": "2.9g",
+        "Calorías": "23 kcal",
+        "Carbohidratos": "3.6g",
+        "VitaminasMinerales": [1, 2, 3, 4, 6, 8, 10, 11, 13, 14, 16, 17, 20, 21, 23, 24, 25],
+        "Costo": "Bajo"
+      },
+      {
+        "ID": 3,
+        "Alimento": "Almendras",
+        "Peso": "0.1",
+        "Proteína": "21g",
+        "Calorías": "576 kcal",
+        "Carbohidratos": "21g",
+        "VitaminasMinerales": [6, 8, 9, 12, 14, 15, 16, 18, 20, 21, 23, 24, 25],
+        "Costo": "Aceptable"
+      },
+      {
+        "ID": 4,
+        "Alimento": "Aguacate",
+        "Peso": "0.2",
+        "Proteína": "2g",
+        "Calorías": "160 kcal",
+        "Carbohidratos": "9g",
+        "VitaminasMinerales": [3, 6, 9, 10, 12, 14, 15, 16, 17, 20, 21, 23, 24, 30],
+        "Costo": "Aceptable"
+      },
+      {
+        "ID": 5,
+        "Alimento": "Semillas de Chía",
+        "Peso": "0.05",
+        "Proteína": "17g",
+        "Calorías": "486 kcal",
+        "Carbohidratos": "42g",
+        "VitaminasMinerales": [6, 8, 12, 14, 15, 16, 18, 20, 21, 23, 24, 30],
+        "Costo": "Aceptable"
+      },
+      {
+        "ID": 6,
+        "Alimento": "Brócoli",
+        "Peso": "0.2",
+        "Proteína": "2.8g",
+        "Calorías": "34 kcal",
+        "Carbohidratos": "6.6g",
+        "VitaminasMinerales": [1, 2, 3, 6, 8, 10, 11, 12, 13, 14, 16, 20, 21, 23, 24, 25],
+        "Costo": "Bajo"
+      },
+      {
+        "ID": 7,
+        "Alimento": "Nueces",
+        "Peso": "0.1",
+        "Proteína": "15g",
+        "Calorías": "654 kcal",
+        "Carbohidratos": "14g",
+        "VitaminasMinerales": [1, 3, 6, 8, 9, 10, 12, 14, 15, 16, 20, 21, 23, 25, 30, 31],
+        "Costo": "Alto"
+      },
+      {
+        "ID": 8,
+        "Alimento": "Quinoa",
+        "Peso": "0.2",
+        "Proteína": "14g",
+        "Calorías": "368 kcal",
+        "Carbohidratos": "64g",
+        "VitaminasMinerales": [6, 8, 12, 14, 15, 16, 18, 20, 21, 23, 24, 25],
+        "Costo": "Aceptable"
+      },
+      {
+        "ID": 9,
+        "Alimento": "Semillas de Lino",
+        "Peso": "0.05",
+        "Proteína": "18g",
+        "Calorías": "534 kcal",
+        "Carbohidratos": "29g",
+        "VitaminasMinerales": [6, 8, 9, 12, 14, 15, 16, 20, 21, 23, 24, 25, 30],
+        "Costo": "Bajo"
+      },
+      {
+        "ID": 10,
+        "Alimento": "Sardinas",
+        "Peso": "0.1",
+        "Proteína": "25g",
+        "Calorías": "208 kcal",
+        "Carbohidratos": "0g",
+        "VitaminasMinerales": [1, 6, 11, 12, 14, 15, 16, 20, 21, 30],
+        "Costo": "Aceptable"
+      },
+      {
+        "ID": 11,
+        "Alimento": "Kale",
+        "Peso": "0.2",
+        "Proteína": "4.3g",
+        "Calorías": "49 kcal",
+        "Carbohidratos": "9g",
+        "VitaminasMinerales": [1, 2, 3, 4, 6, 8, 10, 11, 13, 14, 16, 17, 20, 21, 23, 24, 25],
+        "Costo": "Aceptable"
+      },
+      {
+        "ID": 12,
+        "Alimento": "Semillas de Girasol",
+        "Peso": "0.1",
+        "Proteína": "21g",
+        "Calorías": "584 kcal",
+        "Carbohidratos": "20g",
+        "VitaminasMinerales": [6, 8, 9, 12, 14, 15, 16, 18, 20, 21, 23, 24, 25],
+        "Costo": "Bajo"
+      },
+      {
+        "ID": 13,
+        "Alimento": "Hígado de Res",
+        "Peso": "0.2",
+        "Proteína": "29g",
+        "Calorías": "175 kcal",
+        "Carbohidratos": "5g",
+        "VitaminasMinerales": [1, 2, 6, 8, 9, 12, 14, 15, 16, 20, 21, 23, 24, 25],
+        "Costo": "Aceptable"
+      },
+      {
+        "ID": 14,
+        "Alimento": "Lentejas",
+        "Peso": "0.2",
+        "Proteína": "18g",
+        "Calorías": "230 kcal",
+        "Carbohidratos": "40g",
+        "VitaminasMinerales": [6, 8, 10, 14, 15, 16, 18, 20, 21, 23, 24, 25],
+        "Costo": "Bajo"
+      },
+      {
+        "ID": 15,
+        "Alimento": "Zanahorias",
+        "Peso": "0.2",
+        "Proteína": "0.9g",
+        "Calorías": "41 kcal",
+        "Carbohidratos": "10g",
+        "VitaminasMinerales": [1, 6, 10, 14, 15, 16, 17, 20, 21, 23],
+        "Costo": "Bajo"
+      },
+      {
+        "ID": 16,
+        "Alimento": "Yogur Griego",
+        "Peso": "0.2",
+        "Proteína": "10g",
+        "Calorías": "59 kcal",
+        "Carbohidratos": "3.6g",
+        "VitaminasMinerales": [1, 6, 11, 12, 14, 15, 16, 20, 21],
+        "Costo": "Aceptable"
+      },
+      {
+        "ID": 17,
+        "Alimento": "Moras",
+        "Peso": "0.2",
+        "Proteína": "2g",
+        "Calorías": "43 kcal",
+        "Carbohidratos": "10g",
+        "VitaminasMinerales": [6, 10, 12, 14, 16, 20, 21],
+        "Costo": "Bajo"
+      },
+      {
+        "ID": 18,
+        "Alimento": "Frijoles Negros",
+        "Peso": "0.2",
+        "Proteína": "21g",
+        "Calorías": "341 kcal",
+        "Carbohidratos": "63g",
+        "VitaminasMinerales": [6, 8, 10, 14, 15, 16, 18, 20, 21, 23, 24, 25],
+        "Costo": "Bajo"
+      },
+      {
+        "ID": 19,
+        "Alimento": "Fresas",
+        "Peso": "0.2",
+        "Proteína": "1g",
+        "Calorías": "32 kcal",
+        "Carbohidratos": "8g",
+        "VitaminasMinerales": [1, 6, 10, 14, 16, 17, 20, 21],
+        "Costo": "Bajo"
+      },
+      {
+        "ID": 20,
+        "Alimento": "Avena",
+        "Peso": "0.2",
+        "Proteína": "13g",
+        "Calorías": "389 kcal",
+        "Carbohidratos": "66g",
+        "VitaminasMinerales": [6, 8, 12, 14, 15, 16, 18, 20, 21, 23, 24, 25],
+        "Costo": "Bajo"
+      },
+      {
+        "ID": 21,
+        "Alimento": "Tofu",
+        "Peso": "0.2",
+        "Proteína": "8g",
+        "Calorías": "76 kcal",
+        "Carbohidratos": "1.9g",
+        "VitaminasMinerales": [1, 6, 8, 11, 14, 15, 16, 20, 21, 23],
+        "Costo": "Aceptable"
+      },
+      {
+        "ID": 22,
+        "Alimento": "Manzanas",
+        "Peso": "0.2",
+        "Proteína": "0.3g",
+        "Calorías": "52 kcal",
+        "Carbohidratos": "14g",
+        "VitaminasMinerales": [1, 6, 10, 14, 15, 16, 17, 20, 21],
+        "Costo": "Bajo"
+      },
+      {
+        "ID": 23,
+        "Alimento": "Arándanos",
+        "Peso": "0.2",
+        "Proteína": "0.7g",
+        "Calorías": "57 kcal",
+        "Carbohidratos": "14g",
+        "VitaminasMinerales": [1, 6, 10, 12, 14, 16, 17, 20, 21],
+        "Costo": "Alto"
+      },
+      {
+        "ID": 24,
+        "Alimento": "Batatas",
+        "Peso": "0.2",
+        "Proteína": "1.6g",
+        "Calorías": "86 kcal",
+        "Carbohidratos": "20g",
+        "VitaminasMinerales": [6, 10, 12, 14, 16, 17, 20, 21],
+        "Costo": "Bajo"
+      },
+      {
+        "ID": 25,
+        "Alimento": "Zanahorias",
+        "Peso": "0.2",
+        "Proteína": "0.9g",
+        "Calorías": "41 kcal",
+        "Carbohidratos": "10g",
+        "VitaminasMinerales": [1, 6, 10, 14, 15, 16, 17, 20, 21, 23],
+        "Costo": "Bajo"
+      },
+      {
+        "ID": 26,
+        "Alimento": "Plátanos",
+        "Peso": "0.2",
+        "Proteína": "1.3g",
+        "Calorías": "89 kcal",
+        "Carbohidratos": "23g",
+        "VitaminasMinerales": [6, 10, 14, 16, 17, 20, 21],
+        "Costo": "Bajo"
+      },
+      {
+        "ID": 27,
+        "Alimento": "Pistachos",
+        "Peso": "0.1",
+        "Proteína": "20g",
+        "Calorías": "562 kcal",
+        "Carbohidratos": "28g",
+        "VitaminasMinerales": [6, 8, 12, 14, 15, 16, 18, 20, 21, 23, 24, 25],
+        "Costo": "Alto"
+      },
+      {
+        "ID": 28,
+        "Alimento": "Col Rizada",
+        "Peso": "0.2",
+        "Proteína": "4.3g",
+        "Calorías": "49 kcal",
+        "Carbohidratos": "9g",
+        "VitaminasMinerales": [1, 2, 3, 4, 6, 8, 10, 11, 13, 14, 16, 17, 20, 21, 23, 24, 25],
+        "Costo": "Aceptable"
+      },
+      {
+        "ID": 29,
+        "Alimento": "Sardinas",
+        "Peso": "0.1",
+        "Proteína": "25g",
+        "Calorías": "208 kcal",
+        "Carbohidratos": "0g",
+        "VitaminasMinerales": [1, 6, 11, 12, 14, 15, 16, 20, 21, 30],
+        "Costo": "Aceptable"
+      },
+      {
+        "ID": 30,
+        "Alimento": "Semillas de Calabaza",
+        "Peso": "0.1",
+        "Proteína": "19g",
+        "Calorías": "559 kcal",
+        "Carbohidratos": "34g",
+        "VitaminasMinerales": [6, 8, 9, 12, 14, 15, 16, 18, 20, 21, 23, 24, 25],
+        "Costo": "Bajo"
+      }
+    ]
+    

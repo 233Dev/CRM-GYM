@@ -10,7 +10,9 @@ export default function Header() {
       <h1 className="text-7xl pt-8 text-gray-100">OLYMPUS <br/>GYM</h1>
     </div>
     <div className="w-1/5">
-      <img src="../klipartz.com (7).png" className="transform scale-x-[-1]" alt=""/>
+      <a href="https://www.youtube.com/shorts/mOUQR-tZDxo">
+        <img src="../klipartz.com (7).png" className="transform scale-x-[-1]" alt=""/>
+      </a>
     </div>
   </div>
   )

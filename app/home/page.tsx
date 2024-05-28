@@ -1,72 +1,69 @@
 "use client";
-{/** ERROR MAS GRANDE QUE ME ENSEÑO ESTE COMPONENTE */}
-{/**El problema se debe a que estás intentando acceder a
-la propiedad rol de userInfo fuera del efecto de useEffect.
-Cuando el componente se renderiza por primera vez, userInfo aún es null
-porque la llamada a getUserInfo es asíncrona y tomará algo 
-de tiempo antes de que se complete y actualice el estado de userInfo.
-
-Por lo tanto, cuando intentas acceder a userInfo.rol directamente
-fuera del efecto, userInfo todavía es null, lo que genera un 
-error de "TypeError: Cannot read property 'rol' of null".
-
-La forma correcta de manejar esto es realizar cualquier lógica
-relacionada con userInfo dentro del efecto o mediante un operador
-condicional que maneje el caso en que userInfo sea null.  */}
-
-
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import AuthProvider from "../AuthProvider";
-import { getDocumentInfo } from "../firebase"
+import { getDocumentInfo } from "../firebase";
 import { useRouter } from "next/navigation";
 import HomeUser from './HomeUser';
 import HomeAdmin from './HomeAdmin';
-import HomeReception from './HomeReception'; 
-import HomeTrainer from './HomeTrainer'; 
+import HomeReception from './HomeReception';
+import HomeTrainer from './HomeTrainer';
+import Register from './Register';
 
 export default function HomePage() {
-  const [uid, setUID] = useState(null);
-  const [userInfo, setUserInfo] = useState(null);
-  const router = useRouter();
+    const router = useRouter();
+    const [uid, setUID] = useState(null);
+    const [refresh, setRefresh] = useState(false);
+    const [userInfo, setUserInfo] = useState(null);
+    const [toRender, setToRender] = useState(<div>Cargando...</div>); // Inicialmente muestra un mensaje de carga
 
-  const rol = userInfo ? userInfo.rol : null;
+    useEffect(() => {
+        async function getData() {
+            try {
+                const userData = await getDocumentInfo("usuarios", uid);
+                setUserInfo(userData);
+            } catch (error) {
+                console.error('Error al obtener los datos del usuario:', error);
+            }
+        }
 
+        if (uid) {
+            getData();
+        }
+    }, [uid, refresh]);
 
+    useEffect(() => {
+        if (userInfo) {
+            const rol = userInfo.rol;
+            setToRender(
+                !rol ? <div>No hay ningún rol registrado</div> :
+                rol === 1 ? <HomeUser user={userInfo} /> :
+                rol === 2 ? <HomeReception user={userInfo} /> :
+                rol === 3 ? <HomeTrainer user={userInfo} /> :
+                rol === 4 ? <HomeAdmin user={userInfo} /> :
+                rol === 5 ? <Register user={userInfo} setRefresh={setRefresh} refresh={refresh} /> :
+                <div>Tu perfil no contiene un rol válido asignado</div>
+            );
 
-  useEffect( () => {
-    async function getData() {
-      try {
-        const userData = await getDocumentInfo("usuarios", uid);
-        setUserInfo(userData);
-      } catch (error) {
-        console.error('Error al obtener los datos del usuario:', error);
-      }
+        }
+    }, [userInfo, refresh]); // Actualiza cuando userInfo o refresh cambian
+
+    function handleUserLoggedIn(user) {
+        setUID(user.uid);
     }
 
-    if (uid) {
-      getData();
+    function handleUserNotLoggedIn() {
+        router.push("/login");
     }
-  } , [uid] );
-  
-  function handleUserLoggedIn(user){
-    setUID(user.uid);
-  }
-  function handleUserNotLoggedIn(){
-    router.push("/login");
-  }
 
-  return (
-    <AuthProvider
-      onUserLoggedIn={handleUserLoggedIn}
-      onUserNotLoggedIn={handleUserNotLoggedIn}
-    > 
-      <div>
-        {!rol ? <div>Cargado...</div>:
-         rol===1 ? <HomeUser user={userInfo}/>:
-         rol===2 ? <HomeReception user={userInfo}/>:
-         rol===3 ? <HomeTrainer user={userInfo}/>:
-         rol===4 ? <HomeAdmin user={userInfo}/>:"Tu perfil no contiene un rol válido asignádo"}
-      </div>
-    </AuthProvider>
-  )
+    return (
+        <AuthProvider
+            onUserLoggedIn={handleUserLoggedIn}
+            onUserNotLoggedIn={handleUserNotLoggedIn}
+        >
+            <div>
+                {toRender}
+            </div>
+        </AuthProvider>
+    );
 }
+

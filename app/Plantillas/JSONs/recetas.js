@@ -47,7 +47,7 @@
       "porciones" : 4,
       "ingredientes": [
           { "ingrediente": "quinoa", "cantidad": "100g" },
-          { "ingrediente": "pechuga de pollo", "cantidad": "200g (aprox.)" },
+          { "ingrediente": "pechuga de pollo", "cantidad": "200g" },
           { "ingrediente": "pepino", "cantidad": "1 unidad" },
           { "ingrediente": "pimiento rojo", "cantidad": "1 unidad" },
           { "ingrediente": "tomate", "cantidad": "1 unidad" },

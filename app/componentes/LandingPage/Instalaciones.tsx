@@ -13,12 +13,11 @@ export default function Instalaciones({ user }) {
 
   useEffect(() => {
     async function fetchData() {
-      await fetchAndFilter('servicios', null, [], setServicios);
+      await fetchAndFilter('servicios', 'id', 'instalaciones', setServicios);
     }
     fetchData();
-  }, [uploadedImage]); // Agregar uploadedImage al array de dependencias para actualizar cuando se suba una nueva imagen
-
-  const instalaciones = servicios[0];
+  }, [uploadedImage]); 
+  const instalaciones = servicios[0]; //console.log(servicios);
 
   useEffect(() => {
     if (instalaciones) {
