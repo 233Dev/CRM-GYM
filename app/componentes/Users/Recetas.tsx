@@ -16,15 +16,3 @@ export default function Recetas({ setVerReceta, recetas }) {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-

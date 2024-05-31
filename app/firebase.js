@@ -85,99 +85,74 @@ export async function fetchAndFilter(coleccion, filterField, filterValues, setSt
   }
 }
 
-// Función para crear o actualizar un documento en una subcolección, similar a fetchANdFilter, pero sin ".filter()"
-export async function manageSubcollectionDocument(
+export async function createSubcollectionDocument(
   collectionName, 
   documentId, 
-  subcollectionName = null, 
-  subcollectionDocumentId = null, 
-  data = null,
-  callId = null // Añade este parámetro
+  subcollectionName, 
+  subcollectionDocumentId, 
+  data,
 ) {
   try {
-    console.log(`Call ID: ${callId}, Collection: ${collectionName}, Document: ${documentId}, Subcollection: ${subcollectionName}, SubcollectionDocumentId: ${subcollectionDocumentId}`);
-    let docRef;
-
-    if (subcollectionName) {
-      if (subcollectionDocumentId) {
-        docRef = doc(db, collectionName, documentId, subcollectionName, subcollectionDocumentId);
-      } else {
+    console.log(`Collection: ${collectionName}, Document: ${documentId}, Subcollection: ${subcollectionName}, SubcollectionDocumentId: ${subcollectionDocumentId}`);
+    //let docRef;
         // Si no se proporciona un ID de documento, crear un nuevo documento con ID generado automáticamente en la subcolección
         const subcollectionRef = collection(db, collectionName, documentId, subcollectionName);
         const newDocRef = await addDoc(subcollectionRef, data || {});
-        console.log(`Call ID: ${callId}, Documento creado exitosamente con ID: ${newDocRef.id}`);
-        return (await getDoc(newDocRef)).data();
-      }
-    } else {
-      docRef = doc(db, collectionName, documentId);
-    }
-
-    if (data) {
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        await updateDoc(docRef, data);
-        console.log(`Call ID: ${callId}, Documento actualizado exitosamente`);
-      } else {
-        await setDoc(docRef, data);
-        console.log(`Call ID: ${callId}, Documento creado exitosamente`);
-      }
-
-      const updatedDocSnap = await getDoc(docRef);
-      return updatedDocSnap.data();
-    } else {
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        return docSnap.data();
-      } else {
-        console.error(`Call ID: ${callId}, El documento no existe`);
-        return null;
-      }
-    }
+        console.log(`Documento creado exitosamente con ID: ${newDocRef.id}`);
+        //return (await getDoc(newDocRef)).data();
+        //await setDoc(docRef, data); 
   } catch (error) {
-    console.error(`Call ID: ${callId}, Error al crear o actualizar el documento:`, error);
+    console.error(`Error al crear o actualizar el documento:`, error);
     return null;
   }
 }
 
-
-// Función para obtener todos los documentos de una subcolección si documentId está vacío (talvez ya no sea necesario)
-export async function fetchSubcollectionDocuments(
-  collectionName, 
-  documentId, 
+export async function updateSubcollectionDocument(
+  mainCollectionName, 
+  mainDocumentId, 
   subcollectionName, 
-  filterField = null, 
-  filterValues = null, 
-  setState = null
+  subcollectionDocumentId, 
+  data
 ) {
   try {
-    const subcollectionRef = documentId
-      ? collection(db, collectionName, documentId, subcollectionName)
-      : collection(db, collectionName, subcollectionName);
-
-    const querySnapshot = await getDocs(subcollectionRef);
-    const documents = querySnapshot.docs.map(docSnap => ({
-      ...docSnap.data(),
-      id: docSnap.id
-    }));
-
-    let filteredData;
-    if (filterField && filterValues && filterValues.length > 0) {
-      filteredData = documents.filter(item => filterValues.includes(item[filterField]));
-    } else {
-      filteredData = documents;
-    }
-
-    if (setState) {
-      setState(filteredData);
-    }
-
-    return filteredData;
+    const docRef = doc(db, mainCollectionName, mainDocumentId, subcollectionName, subcollectionDocumentId);
+    await updateDoc(docRef, data);
+    console.log('Documento actualizado exitosamente en la subcolección');
   } catch (error) {
-    console.error(`Error al obtener documentos de la subcolección ${subcollectionName}:`, error);
-    return [];
+    console.error("Error al actualizar documento en la subcolección:", error);
   }
 }
 
+export async function fetchAndFilterSubcollection(
+  mainCollectionName, 
+  mainDocumentId, 
+  subcollectionName, 
+  filterField, 
+  filterValues, 
+  setState
+) {
+  try {
+    const subcollectionRef = collection(db, mainCollectionName, mainDocumentId, subcollectionName);
+    const querySnapshot = await getDocs(subcollectionRef);
+    
+    const data = querySnapshot.docs.map(doc => {
+      const documentData = doc.data();
+      documentData.id = doc.id; // Agrega el ID del documento al objeto de datos
+      return documentData;
+    });
+
+    let filteredData;
+    if (filterField && filterValues && filterValues.length > 0) {
+      filteredData = data.filter(item => filterValues.includes(item[filterField]));
+    } else {
+      filteredData = data; // Devuelve la subcolección completa si no se proporcionan criterios de filtro
+    }
+
+    setState(filteredData);
+  } catch (error) {
+    console.error(`Error al obtener y filtrar datos de la subcolección ${subcollectionName} del documento ${mainDocumentId}:`, error);
+  }
+}
 
 export async function registerNewUser(user) {
   try {
