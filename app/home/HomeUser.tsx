@@ -10,30 +10,30 @@ import Recetas from '../componentes/Users/Recetas';
 import Alacena from '../componentes/Users/Alacena';
 import UpdateAlacena from '../componentes/Users/UpdateAlacena';
 
-{/**HOME CLIENTE */}
-export default function page({ user }) {
+export default function Page({ user }) {
   const [alimentosAlacena, setAlimentosAlacena] = useState([]);
   const [subAlacena, setSubAlacena] = useState([]);
   const [openAlacena, setOpenAlacena] = useState(false);
   const [actualizarAlacena, setActualizarAlacena] = useState(false);
-  const [alacena, setAlacena] = useState([])
+  const [alacena, setAlacena] = useState([]);
   const [rutina, setRutina] = useState([]);
   const [recetas, setRecetas] = useState(null);
   const [verReceta, setVerReceta] = useState(false);
-  const [recetasAlacena, setRecetasAlacena] = useState(null);
+  const [vitaminas, setVitaminas] = useState([]);
   const uid = user.uid;
-  //console.log(uid);
-  //console.log("alimentos en alacena: ");
-  //console.log(alimentosAlacena);
-  console.log(subAlacena);
-  console.log(alimentosAlacena);
+  console.log(alacena);
+  console.log(vitaminas);
 
+
+  useEffect(() => {
+    fetchAndFilter('VitaminasMinerales', null, [], setVitaminas);
+  }, []);
 
   useEffect(() => {
     fetchAndFilter('recetas', 'Id', user.alacena, setRecetas);
   }, [user.alacena]);
 
-  const hoy = new Date(); // Obtener la fecha actual para saber el día y asignar la rutina
+  const hoy = new Date();
   const dia = hoy.getDay();
   const ejerciciosDeHoy = dia === 0 ? user.domingo :
                           dia === 1 ? user.lunes :
@@ -42,54 +42,63 @@ export default function page({ user }) {
                           dia === 4 ? user.jueves :
                           dia === 5 ? user.viernes : user.sabado;
 
-useEffect(() => {
-  const fetchSubAlacena = async () => {
-    try {
-      await fetchAndFilterSubcollection('usuarios', uid, 'alacena', null, null, setSubAlacena);
-    } catch (error) {
-      console.error("Error al obtener y filtrar datos de la subcolección:", error);
-    }
-  };
-
-  fetchSubAlacena();
-}, [actualizarAlacena]);
-
-useEffect(() => {
-  const fetchAlimentosAlacena = async () => {
-    try {
-      const alacenaIds = subAlacena.map(alimento => alimento.alimento);
-      await fetchAndFilter('alimentos', 'ID', alacenaIds, setAlimentosAlacena);
-    } catch (error) {
-      console.error("Error al obtener y filtrar datos:", error);
-    }
-  };
-
-  if (subAlacena.length > 0) {
-    fetchAlimentosAlacena();
-  }
-}, [subAlacena]);
-
-useEffect(() => {
-  const alimentosCombinados = subAlacena.map(alacenaItem => {
-    const alimentoItem = alimentosAlacena.find(alimento => alimento.ID === alacenaItem.alimento);
-    return {
-      ...alacenaItem,
-      ...alimentoItem
+  useEffect(() => {
+    const fetchSubAlacena = async () => {
+      try {
+        await fetchAndFilterSubcollection('usuarios', uid, 'alacena', null, null, setSubAlacena);
+      } catch (error) {
+        console.error("Error al obtener y filtrar datos de la subcolección:", error);
+      }
     };
-  });
-  
-  setAlacena(alimentosCombinados);
-}, [alimentosAlacena])
+    fetchSubAlacena();
+  }, [actualizarAlacena]);
 
+  useEffect(() => {
+    const fetchAlimentosAlacena = async () => {
+      try {
+        const alacenaIds = subAlacena.map(alimento => alimento.alimento);
+        await fetchAndFilter('alimentos', 'ID', alacenaIds, setAlimentosAlacena);
+      } catch (error) {
+        console.error("Error al obtener y filtrar datos:", error);
+      }
+    };
 
+    if (subAlacena.length > 0) {
+      fetchAlimentosAlacena();
+    }
+  }, [subAlacena]);
 
+  useEffect(() => {
+    const alimentosCombinados = subAlacena.map(alacenaItem => {
+      console.log(alacenaItem);
+      const alimentoItem = alimentosAlacena.find(alimento => alimento.ID === alacenaItem.alimento);
+      if (!alimentoItem) {
+        return alacenaItem; // Return alacenaItem if alimentoItem is not found
+      }
+      const vitaminasNombres = alimentoItem.VitaminasMinerales.map(id => {
+        console.log(alimentoItem);
+        const vitamina = vitaminas.find(vitamina => vitamina.ID === id);
+        console.log(vitamina);
+
+        return vitamina ? vitamina.nombre : id;
+      });
+
+      return {
+        ...alacenaItem,
+        ...alimentoItem,
+        VitaminasMinerales: vitaminasNombres
+      };
+    });
+
+    setAlacena(alimentosCombinados);
+  }, [alimentosAlacena, vitaminas]);
 
   useEffect(() => {
     fetchAndFilter('ejercicios', 'Id', ejerciciosDeHoy, setRutina);
   }, [ejerciciosDeHoy]);
 
   return (
-    <> 
+    <>
       <div className='flex w-full'>
         <div className='w-3/12 ring-1 col-span-2'>
           <Requerimientos userInfo={user} />

@@ -7,7 +7,8 @@
         "Calorías": "206 kcal",
         "Carbohidratos": "0g",
         "VitaminasMinerales": [1, 6, 11, 12, 14, 15, 16, 20, 21, 30],
-        "Costo": "Alto"
+        "cantidad": 5,
+        "unidades": "kilos",
       },
       {
         "ID": 2,

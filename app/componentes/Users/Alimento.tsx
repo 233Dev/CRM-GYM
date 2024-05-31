@@ -15,7 +15,7 @@ export default function Alimento({ alimentoInfo, setVerReceta, closeAlacena, set
   };
 
   const OpenAlacena = () => {
-    setCloseAlacena(true);
+    setCloseAlacena(!closeAlacena);
   };
 
   const recetario = () => {

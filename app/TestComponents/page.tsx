@@ -7,9 +7,10 @@ import RecetasConIngredientes from "../Plantillas/RecetasConIngredientes";
 
 
 export default function page() {
+
   return (
     <>
-    <FormReceta />
+    <SubirArrays />
     </>
   );
 }
